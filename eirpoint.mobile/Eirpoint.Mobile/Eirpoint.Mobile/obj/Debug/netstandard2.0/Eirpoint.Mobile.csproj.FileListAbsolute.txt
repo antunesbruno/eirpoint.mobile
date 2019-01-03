@@ -1,7 +1,6 @@
 C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\bin\Debug\netstandard2.0\Eirpoint.Mobile.deps.json
 C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\bin\Debug\netstandard2.0\Eirpoint.Mobile.dll
 C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\bin\Debug\netstandard2.0\Eirpoint.Mobile.pdb
-C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\obj\Debug\netstandard2.0\Eirpoint.Mobile.csprojAssemblyReference.cache
 C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\obj\Debug\netstandard2.0\App.xaml.g.cs
 C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\obj\Debug\netstandard2.0\Views\MainPage.xaml.g.cs
 C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\obj\Debug\netstandard2.0\Eirpoint.Mobile.csproj.CoreCompileInputs.cache
@@ -10,3 +9,4 @@ C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\
 C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\obj\Debug\netstandard2.0\XamlC.stamp
 C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\obj\Debug\netstandard2.0\Eirpoint.Mobile.dll
 C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\obj\Debug\netstandard2.0\Eirpoint.Mobile.pdb
+C:\Projetos-Git\eirpoint.mobile\eirpoint.mobile\Eirpoint.Mobile\Eirpoint.Mobile\obj\Debug\netstandard2.0\Eirpoint.Mobile.csprojAssemblyReference.cache
