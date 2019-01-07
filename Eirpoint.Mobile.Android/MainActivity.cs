@@ -27,8 +27,6 @@ namespace Eirpoint.Mobile.Droid
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //register platform dependencies
-            PlatformDependencies.BuildDependencies();
         }
     }
 }

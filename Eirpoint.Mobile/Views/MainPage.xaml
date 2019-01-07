@@ -4,8 +4,16 @@
              x:Class="Eirpoint.Mobile.Views.MainPage"
              Title="{Binding Title}">
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
-    </StackLayout>
-
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <StackLayout HorizontalOptions="StartAndExpand">
+                <Button x:Name="btn_getProducts" Text="Perform Products" Command="{Binding PerformProductsCommand}" />
+            </StackLayout>
+            <StackLayout HorizontalOptions="FillAndExpand">
+                <ProgressBar x:Name="pb_ProgressBar"  ProgressColor="Blue" Progress="{Binding PbProducts}"></ProgressBar>
+                <Label x:Name="lbl_ProgressBar" Text="{Binding LbProducts}" FontAttributes ="Bold"></Label>
+            </StackLayout>
+        </StackLayout>
+        
+    </ContentPage.Content>
 </ContentPage>

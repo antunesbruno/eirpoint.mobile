@@ -9,4 +9,17 @@
     <PackageReference Include="Prism.Autofac.Forms" Version="7.1.0.431" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\eirpoint.platform\platform.ioc\Platform.Ioc.csproj" />
+    <ProjectReference Include="..\..\eirpoint.platform\platform.shared\Platform.Shared.csproj" />
+    <ProjectReference Include="..\Eirpoint.Mobile.Core\Eirpoint.Mobile.Core.csproj" />
+    <ProjectReference Include="..\Eirpoint.Mobile.Datasource\Eirpoint.Mobile.Datasource.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\BarcodeView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

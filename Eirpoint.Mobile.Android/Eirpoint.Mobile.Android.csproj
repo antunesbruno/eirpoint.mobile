@@ -90,8 +90,8 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\eirpoint.platform\eirpoint.platform\platform.ioc\Platform.Ioc.csproj">
-      <Project>{8243FEFD-82CA-4D3D-AEA7-93E0DE47E0F9}</Project>
+    <ProjectReference Include="..\..\eirpoint.platform\platform.ioc\Platform.Ioc.csproj">
+      <Project>{ed3032e0-0aae-4309-86f8-60e75d24f8b9}</Project>
       <Name>Platform.Ioc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Eirpoint.Mobile\Eirpoint.Mobile.csproj">
