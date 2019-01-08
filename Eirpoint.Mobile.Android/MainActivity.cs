@@ -1,8 +1,6 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Platform.Ioc;
-using Platform.Ioc.Injection;
 using Prism;
 using Prism.Ioc;
 
@@ -20,6 +18,9 @@ namespace Eirpoint.Mobile.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App(new AndroidInitializer()));
+
+            //init scanner
+            //Injector.Resolver<IBarcodeHandler>().InitEMDK();
         }
     }
 

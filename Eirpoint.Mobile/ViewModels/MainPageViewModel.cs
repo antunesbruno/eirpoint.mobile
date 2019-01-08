@@ -1,24 +1,36 @@
 ﻿using Eirpoint.Mobile.Core.Interfaces;
+using Eirpoint.Mobile.Datasource.Repository.Entity;
 using Platform.Ioc.Injection;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Eirpoint.Mobile.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        #region Constructors
+        #region Fields
 
-        public MainPageViewModel(INavigationService navigationService)
+        IPageDialogService _dialogService;
+
+        #endregion
+
+        #region Constructors     
+
+        public MainPageViewModel(INavigationService navigationService, IPageDialogService dialogService)
           : base(navigationService)
         {
+            //dialog
+            _dialogService = dialogService;
+
             //title
             Title = "Eirpoint Mobile - Zebra";
 
@@ -66,7 +78,19 @@ namespace Eirpoint.Mobile.ViewModels
 
         private async void PerformProducts()
         {
-            var product = await Injector.Resolver<IProductsApiCore>().GetProductsByPaging(UpdateProgressBar);    
+            var productsList = await Injector.Resolver<IProductsApiCore>().GetProductsByPaging(UpdateProgressBar);
+
+            if (productsList.Count > 0)
+            {
+                //insert products in database
+                Injector.Resolver<IProductsBll>().InsertAllProducts(productsList);
+
+                //update progressbar
+                UpdateProgressBar(100);
+
+                //inform user about finish process
+                await _dialogService.DisplayAlertAsync("Perform Products", "Products downloaded and saved successfully !", "OK");
+            }
         }
 
         private void UpdateProgressBar(int percent)

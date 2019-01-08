@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using Eirpoint.Mobile.Datasource.Models;
 
 namespace Eirpoint.Mobile.Datasource.Helpers
 {

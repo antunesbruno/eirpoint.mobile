@@ -10,10 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\eirpoint.platform\platform.ioc\Platform.Ioc.csproj" />
-    <ProjectReference Include="..\..\eirpoint.platform\platform.shared\Platform.Shared.csproj" />
     <ProjectReference Include="..\Eirpoint.Mobile.Core\Eirpoint.Mobile.Core.csproj" />
     <ProjectReference Include="..\Eirpoint.Mobile.Datasource\Eirpoint.Mobile.Datasource.csproj" />
+    <ProjectReference Include="..\Eirpoint.Mobile.Ioc\Eirpoint.Mobile.Ioc.csproj" />
   </ItemGroup>
 
   <ItemGroup>

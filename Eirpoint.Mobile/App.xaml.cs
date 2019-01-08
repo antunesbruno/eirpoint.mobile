@@ -1,16 +1,18 @@
-﻿using Prism;
-using Prism.Ioc;
-using Eirpoint.Mobile.ViewModels;
-using Eirpoint.Mobile.Views;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using Platform.Ioc;
-using Platform.Ioc.Injection;
-using Platform.Shared.Contract;
+﻿using Eirpoint.Mobile.Core.Api;
+using Eirpoint.Mobile.Core.Bll;
+using Eirpoint.Mobile.Core.Interfaces;
 using Eirpoint.Mobile.Datasource.Helpers;
 using Eirpoint.Mobile.Datasource.Interfaces;
-using Eirpoint.Mobile.Core.Interfaces;
-using Eirpoint.Mobile.Core.Api;
+using Eirpoint.Mobile.Datasource.Repository.Base;
+using Eirpoint.Mobile.Datasource.Repository.Entity;
+using Eirpoint.Mobile.ViewModels;
+using Eirpoint.Mobile.Views;
+using Platform.Ioc;
+using Platform.Ioc.Injection;
+using Prism;
+using Prism.Ioc;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Eirpoint.Mobile
@@ -37,7 +39,7 @@ namespace Eirpoint.Mobile
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             //register platform dependencies and all mobile dependencies
-            PlatformDependencies.BuildDependencies(RegisterMobileDependencies);
+            RegisterDependencies.BuildDependencies(RegisterMobileDependencies);
 
             //register navigations
             RegisterNavigations(containerRegistry);
@@ -46,9 +48,13 @@ namespace Eirpoint.Mobile
             Injector.Resolver<IDatabaseHelper>().CreateDatabase();
 
             //create tables
-            Injector.Resolver<IDatabaseHelper>().CreateTables();       
+            Injector.Resolver<IDatabaseHelper>().CreateTables();           
         }
 
+        /// <summary>
+        /// MVVM dependencies (Views / ViewModels)
+        /// </summary>
+        /// <param name="containerRegistry"></param>
         private void RegisterNavigations(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -56,13 +62,23 @@ namespace Eirpoint.Mobile
             containerRegistry.RegisterForNavigation<BarcodeView, BarcodeViewViewModel>();
         }
 
+        /// <summary>
+        /// Dependencies of application
+        /// </summary>
         private void RegisterMobileDependencies()
         {
             //datasource
             Injector.RegisterType<DatabaseHelper, IDatabaseHelper>();
+            Injector.RegisterType<PersistenceBase<ProductsEntity>, IPersistenceBase<ProductsEntity>>();           
 
-            //core
+            //core api
             Injector.RegisterType<ProductsApi, IProductsApiCore>();
+
+            //core bll
+            Injector.RegisterType<ProductsBll, IProductsBll>();
+
+            //hardware
+            //Injector.RegisterType<BarcodeHandler, IBarcodeHandler>();
             
         }
     }

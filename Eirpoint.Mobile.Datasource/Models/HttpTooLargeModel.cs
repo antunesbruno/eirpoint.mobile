@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Eirpoint.Mobile.Datasource.Api
+namespace Eirpoint.Mobile.Datasource.Models
 {
     public class HttpTooLargeModel
     {
