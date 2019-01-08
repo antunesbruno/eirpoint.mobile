@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Eirpoint.Mobile.Hardware.Zebra;
 using Prism;
 using Prism.Ioc;
 
@@ -16,11 +17,11 @@ namespace Eirpoint.Mobile.Droid
 
             base.OnCreate(bundle);
 
-            global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App(new AndroidInitializer()));
-
             //init scanner
-            //Injector.Resolver<IBarcodeHandler>().InitEMDK();
+            new ZebraEMDKManager().InitEMDK();
+
+            global::Xamarin.Forms.Forms.Init(this, bundle);
+            LoadApplication(new App(new AndroidInitializer()));         
         }
     }
 

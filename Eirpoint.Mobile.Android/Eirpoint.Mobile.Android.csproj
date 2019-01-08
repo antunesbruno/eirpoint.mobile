@@ -80,7 +80,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="Properties\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
@@ -90,6 +92,10 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Eirpoint.Mobile.Hardware.Zebra\Eirpoint.Mobile.Hardware.Zebra.csproj">
+      <Project>{8A0ADD6A-5E51-496D-B2A0-E33914D2B73D}</Project>
+      <Name>Eirpoint.Mobile.Hardware.Zebra</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eirpoint.Mobile\Eirpoint.Mobile.csproj">
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
       <Name>Eirpoint.Mobile</Name>

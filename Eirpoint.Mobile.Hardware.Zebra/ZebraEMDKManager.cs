@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Eirpoint.Mobile.Hardware.Zebra
 {
-    public class BarcodeHandler : EMDKManager.IEMDKListener, IBarcodeHandler
+    public class ZebraEMDKManager : Java.Lang.Object, EMDKManager.IEMDKListener
     {
         #region Fields       
 

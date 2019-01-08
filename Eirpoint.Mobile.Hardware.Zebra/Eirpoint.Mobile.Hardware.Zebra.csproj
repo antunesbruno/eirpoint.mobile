@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BarcodeHandler.cs" />
+    <Compile Include="ZebraEMDKManager.cs" />
     <Compile Include="BarcodeMessages.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
