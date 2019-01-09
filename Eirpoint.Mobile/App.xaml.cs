@@ -1,6 +1,8 @@
 ﻿using Eirpoint.Mobile.Core.Api;
+using Eirpoint.Mobile.Core.Barcode;
 using Eirpoint.Mobile.Core.Bll;
 using Eirpoint.Mobile.Core.Interfaces;
+using Eirpoint.Mobile.Core.NativeInterfaces;
 using Eirpoint.Mobile.Datasource.Helpers;
 using Eirpoint.Mobile.Datasource.Interfaces;
 using Eirpoint.Mobile.Datasource.Repository.Base;
@@ -77,8 +79,8 @@ namespace Eirpoint.Mobile
             //core bll
             Injector.RegisterType<ProductsBll, IProductsBll>();
 
-            //hardware
-            //Injector.RegisterType<BarcodeHandler, IBarcodeHandler>();
+            //barcode
+            Injector.RegisterType<BarcodeHandler, IBarCode>();
             
         }
     }

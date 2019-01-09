@@ -1,4 +1,6 @@
-﻿using Eirpoint.Mobile.Core.Interfaces;
+﻿using Eirpoint.Mobile.Core.Barcode;
+using Eirpoint.Mobile.Core.Interfaces;
+using Eirpoint.Mobile.Core.NativeInterfaces;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
 using Platform.Ioc.Injection;
 using Prism.Commands;
@@ -39,6 +41,9 @@ namespace Eirpoint.Mobile.ViewModels
 
             //initialize progress bar
             PbProducts = 0.0;
+
+            //delegate result barcode read
+            Injector.Resolver<IBarCode>().OnBarCodeRead += UpdateRead;
         }
 
         #endregion
@@ -63,6 +68,17 @@ namespace Eirpoint.Mobile.ViewModels
             {
                 SetProperty(ref _lbProducts, value);
                 RaisePropertyChanged(nameof(LbProducts));
+            }
+        }
+
+        private string _edtResultRead;
+        public string EdtResultRead
+        {
+            get { return _edtResultRead; }
+            set
+            {
+                SetProperty(ref _edtResultRead, value);
+                RaisePropertyChanged(nameof(EdtResultRead));
             }
         }
 
@@ -101,6 +117,24 @@ namespace Eirpoint.Mobile.ViewModels
                  PbProducts = Convert.ToDouble(y);
                  LbProducts = percent.ToString() + "%";
              });
+        }
+
+        private void UpdateRead(BarcodeReadArgs args)
+        {
+            if (!string.IsNullOrEmpty(args.BarCodeData))
+            {
+                //find the barcode in database
+                var entity = Injector.Resolver<IProductsBll>().GetProductByBarcode(args.BarCodeData);
+
+                if (entity != null)
+                    EdtResultRead = args + "\n \n";
+                else
+                    EdtResultRead = "Barcode not found...: " + args + "\n ";
+            }
+            else
+            {
+                EdtResultRead = args.Message + "\n \n";
+            }
         }
 
         #endregion

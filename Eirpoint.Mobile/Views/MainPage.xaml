@@ -4,16 +4,21 @@
              x:Class="Eirpoint.Mobile.Views.MainPage"
              Title="{Binding Title}">
 
-    <ContentPage.Content>
         <StackLayout Orientation="Vertical">
-            <StackLayout HorizontalOptions="StartAndExpand">
+            <StackLayout HorizontalOptions="StartAndExpand" Padding="10,10,10,10">
                 <Button x:Name="btn_getProducts" Text="Perform Products" Command="{Binding PerformProductsCommand}" />
             </StackLayout>
             <StackLayout HorizontalOptions="FillAndExpand">
                 <ProgressBar x:Name="pb_ProgressBar"  ProgressColor="Blue" Progress="{Binding PbProducts}"></ProgressBar>
                 <Label x:Name="lbl_ProgressBar" Text="{Binding LbProducts}" FontAttributes ="Bold"></Label>
             </StackLayout>
+            <StackLayout HorizontalOptions="FillAndExpand" Padding="5,5,5,5">
+                <ScrollView VerticalScrollBarVisibility="Always">
+                    <StackLayout>
+                        <Editor x:Name="edt_Result" Text="{Binding EdtResultRead}" AutoSize="TextChanges" />
+                    </StackLayout>
+                </ScrollView>            
+             </StackLayout>
         </StackLayout>
-        
-    </ContentPage.Content>
+    
 </ContentPage>

@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Symbol.XamarinEMDK">
+      <Version>3.0.0.41</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2.1" />
@@ -92,9 +95,13 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Eirpoint.Mobile.Hardware.Zebra\Eirpoint.Mobile.Hardware.Zebra.csproj">
-      <Project>{8A0ADD6A-5E51-496D-B2A0-E33914D2B73D}</Project>
-      <Name>Eirpoint.Mobile.Hardware.Zebra</Name>
+    <ProjectReference Include="..\Eirpoint.Mobile.Core\Eirpoint.Mobile.Core.csproj">
+      <Project>{9ffc59ac-fc95-4066-bb25-481b2eaefafc}</Project>
+      <Name>Eirpoint.Mobile.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eirpoint.Mobile.Ioc\Eirpoint.Mobile.Ioc.csproj">
+      <Project>{1D995CD8-69AD-4D00-9BC0-CF1240292C0B}</Project>
+      <Name>Eirpoint.Mobile.Ioc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Eirpoint.Mobile\Eirpoint.Mobile.csproj">
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>

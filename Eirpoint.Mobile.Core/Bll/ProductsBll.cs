@@ -5,6 +5,7 @@ using Platform.Ioc.Injection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Eirpoint.Mobile.Core.Bll
 {
@@ -26,6 +27,18 @@ namespace Eirpoint.Mobile.Core.Bll
         public void Insert(ProductsEntity entity)
         {
             var response = Injector.Resolver<IPersistenceBase<ProductsEntity>>().Insert(entity);
+        }
+
+        /// <summary>
+        /// Get products by barcode data
+        /// </summary>
+        /// <param name="barcodeData"></param>
+        /// <returns></returns>
+        public ProductsEntity GetProductByBarcode(string barcodeData)
+        {
+            //var response = Injector.Resolver<IPersistenceBase<ProductsEntity>>().Get(data);
+
+            return new ProductsEntity();
         }
     }
 }

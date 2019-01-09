@@ -9,5 +9,6 @@ namespace Eirpoint.Mobile.Core.Interfaces
     {
         void InsertAllProducts(List<ProductsEntity> productsList);
         void Insert(ProductsEntity entity);
+        ProductsEntity GetProductByBarcode(string barcodeData);
     }
 }
