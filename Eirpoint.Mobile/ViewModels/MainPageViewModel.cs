@@ -39,6 +39,9 @@ namespace Eirpoint.Mobile.ViewModels
             //products button action
             PerformProductsCommand = new DelegateCommand(PerformProducts);
 
+            //products button action
+            SearchBarcodeCommand = new DelegateCommand(SearchBarcode);
+
             //initialize progress bar
             PbProducts = 0.0;
 
@@ -87,6 +90,7 @@ namespace Eirpoint.Mobile.ViewModels
         #region Delegates
 
         public DelegateCommand PerformProductsCommand { get; set; }
+        public DelegateCommand SearchBarcodeCommand { get; set; }
 
         #endregion
 
@@ -109,6 +113,11 @@ namespace Eirpoint.Mobile.ViewModels
             }
         }
 
+        private async void SearchBarcode()
+        {
+            var entity = await Injector.Resolver<IBarcodeProductsApiCore>().GetBarcodeProductByCode("3414900916229");
+        }
+
         private void UpdateProgressBar(int percent)
         {
             Task.Run(() =>
@@ -119,21 +128,19 @@ namespace Eirpoint.Mobile.ViewModels
              });
         }
 
-        private void UpdateRead(BarcodeReadArgs args)
+        private async void UpdateRead(BarcodeReadArgs args)
         {
             if (!string.IsNullOrEmpty(args.BarCodeData))
             {
-                //find the barcode in database
-                var entity = Injector.Resolver<IProductsBll>().GetProductByBarcode(args.BarCodeData);
-
-                if (entity != null)
-                    EdtResultRead = args + "\n \n";
-                else
-                    EdtResultRead = "Barcode not found...: " + args + "\n ";
+                EdtResultRead = args.BarCodeData + "\n \n";
+            }
+            else if (!string.IsNullOrEmpty(args.Message))
+            {
+                EdtResultRead = args.Message + "\n \n";
             }
             else
             {
-                EdtResultRead = args.Message + "\n \n";
+                EdtResultRead = "Barcode not found...: " + args + "\n ";
             }
         }
 

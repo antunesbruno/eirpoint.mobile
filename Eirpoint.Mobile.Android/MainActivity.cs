@@ -5,8 +5,6 @@ using Android.Util;
 using Eirpoint.Mobile.Core.Barcode;
 using Eirpoint.Mobile.Core.NativeInterfaces;
 using Platform.Ioc.Injection;
-using Prism;
-using Prism.Ioc;
 using Symbol.XamarinEMDK;
 using Symbol.XamarinEMDK.Barcode;
 using System;
@@ -305,15 +303,6 @@ namespace Eirpoint.Mobile.Droid
 
         #endregion
 
-
-    }
-
-    public class AndroidInitializer : IPlatformInitializer
-    {
-        public void RegisterTypes(IContainerRegistry containerRegistry)
-        {
-        }
-    }  
-
+    }   
 }
 

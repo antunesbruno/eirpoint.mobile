@@ -12,6 +12,7 @@ using Eirpoint.Mobile.Views;
 using Platform.Ioc;
 using Platform.Ioc.Injection;
 using Prism;
+using Prism.Autofac;
 using Prism.Ioc;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,17 +20,16 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Eirpoint.Mobile
 {
-    public partial class App
+    public partial class App : PrismApplication
     {      
+    
+        public App() : this(null)
+        {
+        }
 
-        /* 
-         * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
-         * This imposes a limitation in which the App class must have a default constructor. 
-         * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
-         */
-        public App() : this(null) { }
-
-        public App(IPlatformInitializer initializer) : base(initializer) { }
+        public App(IPlatformInitializer initializer) : base(initializer)
+        {
+        }
 
         protected override async void OnInitialized()
         {
@@ -75,6 +75,7 @@ namespace Eirpoint.Mobile
 
             //core api
             Injector.RegisterType<ProductsApi, IProductsApiCore>();
+            Injector.RegisterType<BarcodeProductsApi, IBarcodeProductsApiCore>();            
 
             //core bll
             Injector.RegisterType<ProductsBll, IProductsBll>();
