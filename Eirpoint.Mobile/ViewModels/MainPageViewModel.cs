@@ -1,19 +1,13 @@
-﻿using Eirpoint.Mobile.Core.Barcode;
+﻿using Acr.UserDialogs;
+using Eirpoint.Mobile.Core.Barcode;
 using Eirpoint.Mobile.Core.Interfaces;
 using Eirpoint.Mobile.Core.NativeInterfaces;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
 using Platform.Ioc.Injection;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace Eirpoint.Mobile.ViewModels
 {
@@ -22,6 +16,7 @@ namespace Eirpoint.Mobile.ViewModels
         #region Fields
 
         IPageDialogService _dialogService;
+        IProgressDialog _progressDialog;
 
         #endregion
 
@@ -36,6 +31,9 @@ namespace Eirpoint.Mobile.ViewModels
             //title
             Title = "Eirpoint Mobile - Zebra";
 
+            //label results
+            LbResults = "Status Barcode and Read Value :";
+
             //products button action
             PerformProductsCommand = new DelegateCommand(PerformProducts);
 
@@ -47,6 +45,9 @@ namespace Eirpoint.Mobile.ViewModels
 
             //delegate result barcode read
             Injector.Resolver<IBarCode>().OnBarCodeRead += UpdateRead;
+
+            //indicator
+            IsRunning = false;
         }
 
         #endregion
@@ -74,6 +75,17 @@ namespace Eirpoint.Mobile.ViewModels
             }
         }
 
+        private string _lbResults;
+        public string LbResults
+        {
+            get { return _lbResults; }
+            set
+            {
+                SetProperty(ref _lbResults, value);
+                RaisePropertyChanged(nameof(_lbResults));
+            }
+        }
+
         private string _edtResultRead;
         public string EdtResultRead
         {
@@ -84,6 +96,39 @@ namespace Eirpoint.Mobile.ViewModels
                 RaisePropertyChanged(nameof(EdtResultRead));
             }
         }
+
+        private BarcodesEntity _barcodesEntity;
+        public BarcodesEntity BarcodesEntity
+        {
+            get { return _barcodesEntity; }
+            set
+            {
+                SetProperty(ref _barcodesEntity, value);
+                RaisePropertyChanged(nameof(BarcodesEntity));
+            }
+        }
+
+        private string _txtProductsFind;
+        public string TxtProductsFind
+        {
+            get { return _txtProductsFind; }
+            set
+            {
+                SetProperty(ref _txtProductsFind, value);
+                RaisePropertyChanged(nameof(TxtProductsFind));
+            }
+        }
+
+        private bool _isRunning;
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            set
+            {
+                SetProperty(ref _isRunning, value);
+                RaisePropertyChanged(nameof(IsRunning));
+            }
+        }                
 
         #endregion
 
@@ -98,41 +143,51 @@ namespace Eirpoint.Mobile.ViewModels
 
         private async void PerformProducts()
         {
-            var productsList = await Injector.Resolver<IProductsApiCore>().GetProductsByPaging(UpdateProgressBar);
-
-            if (productsList.Count > 0)
+            using (_progressDialog = UserDialogs.Instance.Progress("Downloading Products", null, null, true, MaskType.Black))
             {
-                //insert products in database
-                Injector.Resolver<IProductsBll>().InsertAllProducts(productsList);
+                var productsList = await Injector.Resolver<IProductsApiCore>().GetProductsByPaging(UpdateProgressBar);
 
-                //update progressbar
-                UpdateProgressBar(100);
+                if (productsList.Count > 0)
+                {
+                    //insert products in database
+                    Injector.Resolver<IProductsBll>().InsertAllProducts(productsList);
 
-                //inform user about finish process
-                await _dialogService.DisplayAlertAsync("Perform Products", "Products downloaded and saved successfully !", "OK");
+                    //update progressbar
+                    UpdateProgressBar(100);
+
+                    //inform user about finish process
+                    await _dialogService.DisplayAlertAsync("Perform Products", "Products downloaded and saved successfully !", "OK");
+                }
             }
         }
 
         private async void SearchBarcode()
         {
-            var entity = await Injector.Resolver<IBarcodeProductsApiCore>().GetBarcodeProductByCode("3414900916229");
+            using (var Dialog = UserDialogs.Instance.Loading("Searching Barcode", null, null, true, MaskType.Black))
+            {
+                BarcodesEntity = new BarcodesEntity();
+
+                var entity = await Injector.Resolver<IBarcodeProductsApiCore>().GetBarcodeProductByCode(TxtProductsFind);
+
+                if (entity?.Barcode != null)
+                    BarcodesEntity = entity;
+            }
         }
 
         private void UpdateProgressBar(int percent)
         {
             Task.Run(() =>
              {
-                 decimal y = ((decimal)percent) / 100;
-                 PbProducts = Convert.ToDouble(y);
-                 LbProducts = percent.ToString() + "%";
+                 _progressDialog.PercentComplete = percent;
              });
         }
 
-        private async void UpdateRead(BarcodeReadArgs args)
+        private void UpdateRead(BarcodeReadArgs args)
         {
             if (!string.IsNullOrEmpty(args.BarCodeData))
             {
-                EdtResultRead = args.BarCodeData + "\n \n";
+                TxtProductsFind = args.BarCodeData;
+                EdtResultRead = args.Message + "\n \n";
             }
             else if (!string.IsNullOrEmpty(args.Message))
             {

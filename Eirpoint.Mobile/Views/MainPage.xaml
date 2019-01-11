@@ -4,30 +4,79 @@
              x:Class="Eirpoint.Mobile.Views.MainPage"
              Title="{Binding Title}">
 
-    <ContentPage.Content>    
-        <StackLayout>
-
-            <StackLayout Orientation="Vertical">
-                <StackLayout HorizontalOptions="StartAndExpand" Padding="10,10,10,10">
-                    <Button x:Name="btn_getProducts" Text="Perform Products" Command="{Binding PerformProductsCommand}" />
-                </StackLayout>
-                <StackLayout HorizontalOptions="FillAndExpand"  Padding="10,10,10,10">
-                    <ProgressBar x:Name="pb_ProgressBar"  ProgressColor="Blue" Progress="{Binding PbProducts}" />
-                    <Label x:Name="lbl_ProgressBar" Text="{Binding LbProducts}" FontAttributes ="Bold" FontSize="Default" />
-                </StackLayout>
-            </StackLayout>
-
-            <StackLayout Orientation="Vertical">
-                <StackLayout HorizontalOptions="FillAndExpand" Padding="5,5,5,5">
-                    <ScrollView VerticalScrollBarVisibility="Always">
-                        <StackLayout>
-                            <Editor x:Name="edt_Result" Text="{Binding EdtResultRead}" AutoSize="TextChanges" />
+    <ContentPage.Content>        
+        <ScrollView VerticalScrollBarVisibility="Default">
+            <StackLayout>
+                
+                <Label x:Name="lbl_Result" Text="{Binding LbResults}" FontAttributes ="Bold" FontSize="Default" />
+                <Frame BorderColor="Silver" CornerRadius="3" Margin="5,5,5,5">
+                    <StackLayout Orientation="Vertical" Padding="5,5,5,5">
+                        <StackLayout HorizontalOptions="FillAndExpand" >
+                            <ScrollView VerticalScrollBarVisibility="Always">
+                                <StackLayout>
+                                    <Editor x:Name="edt_Result" Text="{Binding EdtResultRead}" AutoSize="TextChanges" IsEnabled="False" InputTransparent="True" />
+                                </StackLayout>
+                            </ScrollView>
                         </StackLayout>
-                    </ScrollView>
-                    <Button x:Name="btn_SearchDatabase" Text="Search Barcode Read" Command="{Binding SearchBarcodeCommand}" />
-                </StackLayout>
-            </StackLayout>
+                    </StackLayout>
+                </Frame>
+                
+                <Label x:Name="lblBarcodeSearch" Text="Search Barcode - Online: " FontAttributes ="Bold" FontSize="Default" />
+                <Frame CornerRadius="1" BorderColor="Silver" Margin="5,5,5,5">
+                    <StackLayout Orientation="Vertical">
+                        <StackLayout HorizontalOptions="FillAndExpand" Padding="5,5,5,5">
+                            <Entry x:Name="txt_FindProducts" Text="{Binding TxtProductsFind}" Placeholder="Type barcode here !"/>
+                            <Button x:Name="btn_SearchDatabase" Text="Search Barcode Read" Command="{Binding SearchBarcodeCommand}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Grid Padding="5,0" RowSpacing="1" ColumnSpacing="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
-        </StackLayout>        
+                                <Label x:Name="lbl_Id" Text="Id: " FontAttributes ="Bold" FontSize="Default" Grid.Row="0" Grid.Column="0"/>
+                                <Label x:Name="lbl_IdValue" Text="{Binding BarcodesEntity.Id}" FontAttributes ="Bold" FontSize="Default" Grid.Row="0" Grid.Column="1"/>
+
+                                <Label x:Name="lbl_Barcode" Text="Barcode: " FontAttributes ="Bold" FontSize="Default" Grid.Row="1" Grid.Column="0"/>
+                                <Label x:Name="lbl_BarcodeValue" Text="{Binding BarcodesEntity.Barcode}" FontAttributes ="Bold" FontSize="Default" Grid.Row="1" Grid.Column="1"/>
+
+                                <Label x:Name="lbl_StockItem" Text="StockItemId: " FontAttributes ="Bold" FontSize="Default" Grid.Row="2" Grid.Column="0"/>
+                                <Label x:Name="lbl_StockItemValue" Text="{Binding BarcodesEntity.StockItemId}" FontAttributes ="Bold" FontSize="Default" Grid.Row="2" Grid.Column="1"/>
+
+                                <Label x:Name="lbl_SyncUpdate" Text="SyncUpdateTimestamp: " FontAttributes ="Bold" FontSize="Default" Grid.Row="3" Grid.Column="0"/>
+                                <Label x:Name="lbl_SyncUpdateValue" Text="{Binding BarcodesEntity.SyncUpdateTimestamp}" FontAttributes ="Bold" FontSize="Default" Grid.Row="3" Grid.Column="1"/>
+
+                                <Label x:Name="lbl_SyncInsert" Text="SyncInsertTimestamp: " FontAttributes ="Bold" FontSize="Default" Grid.Row="4" Grid.Column="0"/>
+                                <Label x:Name="lbl_SyncInsertValue" Text="{Binding BarcodesEntity.SyncInsertTimestamp}" FontAttributes ="Bold" FontSize="Default" Grid.Row="4" Grid.Column="1"/>
+
+                                <Label x:Name="lbl_LastMod" Text="LastModified: " FontAttributes ="Bold" FontSize="Default" Grid.Row="5" Grid.Column="0"/>
+                                <Label x:Name="lbl_LastModValue" Text="{Binding BarcodesEntity.LastModified}" FontAttributes ="Bold" FontSize="Default" Grid.Row="5" Grid.Column="1"/>
+
+                            </Grid>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+
+                <Label x:Name="lblProducts" Text="Products - (This can take a while time) " FontAttributes ="Bold" FontSize="Default" />
+                <Frame CornerRadius="1" BorderColor="Silver" Margin="5,5,5,5">
+                    <StackLayout Orientation="Vertical" Padding="5,5,5,5">
+                        <StackLayout HorizontalOptions="StartAndExpand">
+                            <Button x:Name="btn_getProducts" Text="Download All Products" Command="{Binding PerformProductsCommand}" />
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+
+
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

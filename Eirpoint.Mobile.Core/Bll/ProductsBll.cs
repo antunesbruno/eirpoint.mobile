@@ -2,10 +2,7 @@
 using Eirpoint.Mobile.Datasource.Repository.Base;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
 using Platform.Ioc.Injection;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 
 namespace Eirpoint.Mobile.Core.Bll
 {

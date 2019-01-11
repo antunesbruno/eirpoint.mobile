@@ -1,7 +1,5 @@
 ﻿using Eirpoint.Mobile.Core.Barcode;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Eirpoint.Mobile.Core.NativeInterfaces
 {

@@ -1,7 +1,6 @@
 ﻿using Eirpoint.Mobile.Datasource.Interfaces;
 using Eirpoint.Mobile.Datasource.Repository;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
-using Platform.Ioc.Injection;
 
 namespace Eirpoint.Mobile.Datasource.Helpers
 {

@@ -1,16 +1,11 @@
 ﻿using Eirpoint.Mobile.Core.Interfaces;
 using Eirpoint.Mobile.Datasource.Api;
 using Eirpoint.Mobile.Datasource.Helpers;
-using Eirpoint.Mobile.Datasource.Repository.Base;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
 using Newtonsoft.Json;
-using Platform.Ioc.Injection;
 using Refit;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Eirpoint.Mobile.Core.Api

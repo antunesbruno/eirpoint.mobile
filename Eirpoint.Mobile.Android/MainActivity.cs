@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using Acr.UserDialogs;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Util;
@@ -12,7 +13,7 @@ using System.Collections.Generic;
 
 namespace Eirpoint.Mobile.Droid
 {
-    [Activity(Label = "Eirpoint.Mobile", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Eirpoint.Mobile", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, EMDKManager.IEMDKListener
     {
         #region Fields        
@@ -20,7 +21,6 @@ namespace Eirpoint.Mobile.Droid
         EMDKManager emdkManager = null;
         BarcodeManager barcodeManager = null;
         Scanner scanner = null;
-        private string ScannerStatus;
 
         #endregion
 
@@ -36,6 +36,9 @@ namespace Eirpoint.Mobile.Droid
 
             //init zebra EMDK
             InitEMDK();
+
+            //ACR Dialogs
+            UserDialogs.Init(this);
         }
 
         #region IEMDKListener Methods                 
@@ -207,13 +210,11 @@ namespace Eirpoint.Mobile.Droid
 
                 foreach (ScanDataCollection.ScanData data in scanData)
                 {
-                    ScannerStatus = data.LabelType + " : " + data.Data;
-
                     //send data to delegate
                     Injector.Resolver<IBarCode>().RaiseBarCodeReadEvent(new BarcodeReadArgs()
                     {
-                        BarCodeData = ScannerStatus,
-                        Message = string.Empty,
+                        BarCodeData = data.Data,
+                        Message = data.LabelType + " : " + data.Data,
                         TimeStamp = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
                     });
                 }

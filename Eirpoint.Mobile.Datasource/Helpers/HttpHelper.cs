@@ -1,14 +1,13 @@
 ﻿using Eirpoint.Mobile.Datasource.Api;
+using Eirpoint.Mobile.Datasource.Models;
 using Newtonsoft.Json;
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
-using Eirpoint.Mobile.Datasource.Models;
 
 namespace Eirpoint.Mobile.Datasource.Helpers
 {

@@ -1,11 +1,8 @@
-﻿using Eirpoint.Mobile.Datasource.Interfaces;
-using Platform.Ioc.Injection;
-using SQLite;
+﻿using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Eirpoint.Mobile.Datasource.Repository.Base

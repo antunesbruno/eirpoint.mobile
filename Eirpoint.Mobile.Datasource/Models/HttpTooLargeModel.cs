@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Eirpoint.Mobile.Datasource.Models
+﻿namespace Eirpoint.Mobile.Datasource.Models
 {
     public class HttpTooLargeModel
     {

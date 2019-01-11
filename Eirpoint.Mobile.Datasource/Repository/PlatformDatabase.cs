@@ -1,6 +1,4 @@
-﻿using Eirpoint.Mobile.Datasource.Interfaces;
-using Eirpoint.Mobile.Datasource.Repository.Entity;
-using SQLite;
+﻿using SQLite;
 using System;
 using System.IO;
 

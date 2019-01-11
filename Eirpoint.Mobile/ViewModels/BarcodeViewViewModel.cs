@@ -1,12 +1,8 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Prism.Mvvm;
 
 namespace Eirpoint.Mobile.ViewModels
 {
-	public class BarcodeViewViewModel : BindableBase
+    public class BarcodeViewViewModel : BindableBase
 	{
         public BarcodeViewViewModel()
         {

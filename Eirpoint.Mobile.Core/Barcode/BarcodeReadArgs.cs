@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Eirpoint.Mobile.Core.Barcode
+﻿namespace Eirpoint.Mobile.Core.Barcode
 {
     public class BarcodeReadArgs
     {

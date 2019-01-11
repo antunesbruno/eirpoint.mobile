@@ -6,7 +6,7 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.CAMERA" />
-	<application android:label="Eirpoint.Mobile.Android" android:icon="@mipmap/ic_launcher">
-		<uses-library android:name="com.symbol.emdk"/>
+	<application android:label="Eirpoint POC" android:icon="@mipmap/ic_launcher">
+		<uses-library android:name="com.symbol.emdk" />
 	</application>
 </manifest>
