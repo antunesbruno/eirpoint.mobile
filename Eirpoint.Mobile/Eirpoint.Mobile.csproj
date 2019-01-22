@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
+    <PackageReference Include="Xam.Plugin.Connectivity" Version="3.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
     <PackageReference Include="Prism.Autofac.Forms" Version="7.1.0.431" />
   </ItemGroup>
@@ -14,6 +15,7 @@
     <ProjectReference Include="..\Eirpoint.Mobile.Core\Eirpoint.Mobile.Core.csproj" />
     <ProjectReference Include="..\Eirpoint.Mobile.Datasource\Eirpoint.Mobile.Datasource.csproj" />
     <ProjectReference Include="..\Eirpoint.Mobile.Ioc\Eirpoint.Mobile.Ioc.csproj" />
+    <ProjectReference Include="..\Eirpoint.Mobile.Shared\Eirpoint.Mobile.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

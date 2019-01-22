@@ -1,7 +1,7 @@
-﻿using Eirpoint.Mobile.Core.NativeInterfaces;
+﻿using Eirpoint.Mobile.Shared.NativeInterfaces;
 using System;
 
-namespace Eirpoint.Mobile.Core.Barcode
+namespace Eirpoint.Mobile.Shared.Barcode
 {
     public class BarcodeHandler : IBarCode
     {

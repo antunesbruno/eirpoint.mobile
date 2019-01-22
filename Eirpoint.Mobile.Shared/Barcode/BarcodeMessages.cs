@@ -1,4 +1,4 @@
-﻿namespace Eirpoint.Mobile.Core.Barcode
+﻿namespace Eirpoint.Mobile.Shared.Barcode
 {
     public static class BarcodeMessages
     {

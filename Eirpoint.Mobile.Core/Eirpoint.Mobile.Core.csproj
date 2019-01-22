@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Eirpoint.Mobile.Datasource\Eirpoint.Mobile.Datasource.csproj" />
+    <ProjectReference Include="..\Eirpoint.Mobile.Shared\Eirpoint.Mobile.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -117,6 +117,10 @@
       <Project>{1D995CD8-69AD-4D00-9BC0-CF1240292C0B}</Project>
       <Name>Eirpoint.Mobile.Ioc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Eirpoint.Mobile.Shared\Eirpoint.Mobile.Shared.csproj">
+      <Project>{5ACB4030-733D-45A7-9834-806CF178D3A8}</Project>
+      <Name>Eirpoint.Mobile.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eirpoint.Mobile\Eirpoint.Mobile.csproj">
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
       <Name>Eirpoint.Mobile</Name>

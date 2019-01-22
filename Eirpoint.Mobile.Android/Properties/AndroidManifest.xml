@@ -7,6 +7,6 @@
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<application android:label="Eirpoint POC" android:icon="@mipmap/ic_launcher">
-		<uses-library android:name="com.symbol.emdk" />
+		<uses-library android:name="com.symbol.emdk" android:required="false" />
 	</application>
 </manifest>

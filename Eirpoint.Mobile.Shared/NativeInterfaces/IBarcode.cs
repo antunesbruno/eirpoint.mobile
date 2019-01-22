@@ -1,7 +1,7 @@
-﻿using Eirpoint.Mobile.Core.Barcode;
+﻿using Eirpoint.Mobile.Shared.Barcode;
 using System;
 
-namespace Eirpoint.Mobile.Core.NativeInterfaces
+namespace Eirpoint.Mobile.Shared.NativeInterfaces
 {
     public interface IBarCode : IDisposable
     {

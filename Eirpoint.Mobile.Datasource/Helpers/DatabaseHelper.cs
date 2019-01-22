@@ -27,7 +27,9 @@ namespace Eirpoint.Mobile.Datasource.Helpers
             PlatformDatabase.CreateTable<StockItemsEntity>();
             PlatformDatabase.CreateTable<TaxCategoryEntity>();
             PlatformDatabase.CreateTable<SelfEntity>();
-            PlatformDatabase.CreateTable<SubDepartmentEntity>();            
+            PlatformDatabase.CreateTable<SubDepartmentEntity>();
+            PlatformDatabase.CreateTable<RangeHeaderLog>();
+
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using Eirpoint.Mobile.Core.Api;
-using Eirpoint.Mobile.Core.Barcode;
 using Eirpoint.Mobile.Core.Bll;
 using Eirpoint.Mobile.Core.Interfaces;
-using Eirpoint.Mobile.Core.NativeInterfaces;
 using Eirpoint.Mobile.Datasource.Helpers;
 using Eirpoint.Mobile.Datasource.Interfaces;
 using Eirpoint.Mobile.Datasource.Repository.Base;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
+using Eirpoint.Mobile.Shared;
+using Eirpoint.Mobile.Shared.Barcode;
+using Eirpoint.Mobile.Shared.NativeInterfaces;
 using Eirpoint.Mobile.ViewModels;
 using Eirpoint.Mobile.Views;
 using Platform.Ioc;
@@ -71,18 +72,23 @@ namespace Eirpoint.Mobile
         {
             //datasource
             Injector.RegisterType<DatabaseHelper, IDatabaseHelper>();
-            Injector.RegisterType<PersistenceBase<ProductsEntity>, IPersistenceBase<ProductsEntity>>();           
+            Injector.RegisterType<PersistenceBase<ProductsEntity>, IPersistenceBase<ProductsEntity>>();
+            Injector.RegisterType<PersistenceBase<RangeHeaderLog>, IPersistenceBase<RangeHeaderLog>>();
 
             //core api
             Injector.RegisterType<ProductsApi, IProductsApiCore>();
-            Injector.RegisterType<BarcodeProductsApi, IBarcodeProductsApiCore>();            
+            Injector.RegisterType<BarcodeProductsApi, IBarcodeProductsApiCore>();
+            Injector.RegisterType<BasicDataApi, IBasicDataApiCore>(); 
 
             //core bll
             Injector.RegisterType<ProductsBll, IProductsBll>();
 
             //barcode
             Injector.RegisterType<BarcodeHandler, IBarCode>();
-            
+
+            //native interfaces
+            Injector.RegisterType<NativeConnectivity, IConnectivity>();
+
         }
     }
 }

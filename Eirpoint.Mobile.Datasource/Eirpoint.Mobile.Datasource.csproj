@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Eirpoint.Mobile.Ioc\Eirpoint.Mobile.Ioc.csproj" />
+    <ProjectReference Include="..\Eirpoint.Mobile.Shared\Eirpoint.Mobile.Shared.csproj" />
   </ItemGroup>
 
 </Project>

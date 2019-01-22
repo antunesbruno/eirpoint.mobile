@@ -1,8 +1,8 @@
 ﻿using Acr.UserDialogs;
-using Eirpoint.Mobile.Core.Barcode;
 using Eirpoint.Mobile.Core.Interfaces;
-using Eirpoint.Mobile.Core.NativeInterfaces;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
+using Eirpoint.Mobile.Shared.Barcode;
+using Eirpoint.Mobile.Shared.NativeInterfaces;
 using Platform.Ioc.Injection;
 using Prism.Commands;
 using Prism.Navigation;
@@ -145,19 +145,22 @@ namespace Eirpoint.Mobile.ViewModels
         {
             using (_progressDialog = UserDialogs.Instance.Progress("Downloading Products", null, null, true, MaskType.Black))
             {
-                var productsList = await Injector.Resolver<IProductsApiCore>().GetProductsByPaging(UpdateProgressBar);
+                
+                    await Injector.Resolver<IBasicDataApiCore>().SynchronizeDataItems(UpdateProgressBar);
 
-                if (productsList.Count > 0)
-                {
-                    //insert products in database
-                    Injector.Resolver<IProductsBll>().InsertAllProducts(productsList);
+                //var productsList = await Injector.Resolver<IProductsApiCore>().GetProductsByPaging(UpdateProgressBar);
 
-                    //update progressbar
-                    UpdateProgressBar(100);
+                //if (productsList.Count > 0)
+                //{
+                //    //insert products in database
+                //    Injector.Resolver<IProductsBll>().InsertAllProducts(productsList);
 
-                    //inform user about finish process
-                    await _dialogService.DisplayAlertAsync("Perform Products", "Products downloaded and saved successfully !", "OK");
-                }
+                //    //update progressbar
+                //    UpdateProgressBar(100);
+
+                //    //inform user about finish process
+                //    await _dialogService.DisplayAlertAsync("Perform Products", "Products downloaded and saved successfully !", "OK");
+                //}
             }
         }
 

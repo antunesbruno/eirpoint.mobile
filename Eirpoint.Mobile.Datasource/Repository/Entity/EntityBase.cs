@@ -8,8 +8,8 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
     public class EntityBase
     {
         [PrimaryKey]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
-        public string Href { get; set; }
+        public virtual string Href { get; set; }
     }
 }

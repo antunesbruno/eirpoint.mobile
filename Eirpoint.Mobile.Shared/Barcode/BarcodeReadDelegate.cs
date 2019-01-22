@@ -1,4 +1,4 @@
-﻿namespace Eirpoint.Mobile.Core.Barcode
+﻿namespace Eirpoint.Mobile.Shared.Barcode
 {
     public delegate void BarCodeReadDelegate(BarcodeReadArgs args);
 }
