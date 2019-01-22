@@ -38,13 +38,10 @@ namespace Eirpoint.Mobile.Core.Api
             var httpClient = Endpoints.BaseEirpointHttpClient("/products");
 
             //request products
-            //var productsRequest = await new HttpHelper().SynchronizeAndGetList<ProductsEntity>(httpClient, onProgressCallback);
-
-            await new HttpHelper().Synchronize<ProductsEntity>(httpClient, onProgressCallback);
-
+            var productsRequest = await new HttpHelper().SynchronizeAndGetList<ProductsEntity>(httpClient, onProgressCallback);
+            
             //return products
-            //return productsRequest;
-            return new List<ProductsEntity>();
+            return productsRequest;            
         }  
     }
 }

@@ -8,6 +8,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Eirpoint.Mobile.ViewModels
 {
@@ -15,8 +16,7 @@ namespace Eirpoint.Mobile.ViewModels
     {
         #region Fields
 
-        IPageDialogService _dialogService;
-        IProgressDialog _progressDialog;
+        IPageDialogService _dialogService;        
 
         #endregion
 
@@ -53,6 +53,17 @@ namespace Eirpoint.Mobile.ViewModels
         #endregion
 
         #region Properties
+
+        private IProgressDialog _progressDialog;
+        public IProgressDialog ProgressDialog
+        {
+            get { return _progressDialog; }
+            set
+            {
+                SetProperty(ref _progressDialog, value);
+                RaisePropertyChanged(nameof(ProgressDialog));
+            }
+        }
 
         private double _pbProducts;
         public double PbProducts
@@ -143,25 +154,16 @@ namespace Eirpoint.Mobile.ViewModels
 
         private async void PerformProducts()
         {
-            using (_progressDialog = UserDialogs.Instance.Progress("Downloading Products", null, null, true, MaskType.Black))
-            {
-                
-                    await Injector.Resolver<IBasicDataApiCore>().SynchronizeDataItems(UpdateProgressBar);
+            //declare progress dialog
+            ProgressDialog = UserDialogs.Instance.Progress("", null, null, false, MaskType.Black);
 
-                //var productsList = await Injector.Resolver<IProductsApiCore>().GetProductsByPaging(UpdateProgressBar);
+            //start synchronism
+            await Injector.Resolver<IBasicDataApiCore>().SynchronizeDataItems(UpdateProgressBar, ProgressDialog);
+         
+            //    //inform user about finish process
+            //    await _dialogService.DisplayAlertAsync("Perform Products", "Products downloaded and saved successfully !", "OK");
 
-                //if (productsList.Count > 0)
-                //{
-                //    //insert products in database
-                //    Injector.Resolver<IProductsBll>().InsertAllProducts(productsList);
 
-                //    //update progressbar
-                //    UpdateProgressBar(100);
-
-                //    //inform user about finish process
-                //    await _dialogService.DisplayAlertAsync("Perform Products", "Products downloaded and saved successfully !", "OK");
-                //}
-            }
         }
 
         private async void SearchBarcode()

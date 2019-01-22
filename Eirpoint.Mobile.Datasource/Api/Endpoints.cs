@@ -17,13 +17,13 @@ namespace Eirpoint.Mobile.Datasource.Api
         {
             var authData = string.Format("{0}:{1}", BaseEirpointUser, BaseEirpointPass);
             var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
-        
-            var httpClient = new HttpClient();
-            httpClient.BaseAddress = string.IsNullOrEmpty(milestoneEndPoint) ? new Uri(BaseEirpointUrl) : new Uri(BaseEirpointUrl + milestoneEndPoint);
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
 
-            return httpClient;
+            var _httpClient = new HttpClient();
+            _httpClient.BaseAddress = string.IsNullOrEmpty(milestoneEndPoint) ? new Uri(BaseEirpointUrl) : new Uri(BaseEirpointUrl + milestoneEndPoint);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+            _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+
+            return _httpClient;
         }
     }
 }

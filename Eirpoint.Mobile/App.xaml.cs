@@ -73,7 +73,9 @@ namespace Eirpoint.Mobile
             //datasource
             Injector.RegisterType<DatabaseHelper, IDatabaseHelper>();
             Injector.RegisterType<PersistenceBase<ProductsEntity>, IPersistenceBase<ProductsEntity>>();
-            Injector.RegisterType<PersistenceBase<RangeHeaderLog>, IPersistenceBase<RangeHeaderLog>>();
+            Injector.RegisterType<PersistenceBase<RangeHeaderLogEntity>, IPersistenceBase<RangeHeaderLogEntity>>();
+            Injector.RegisterType<PersistenceBase<DepartmentEntity>, IPersistenceBase<DepartmentEntity>>();
+            Injector.RegisterType<PersistenceBase<CustomersEntity>, IPersistenceBase<CustomersEntity>>();
 
             //core api
             Injector.RegisterType<ProductsApi, IProductsApiCore>();

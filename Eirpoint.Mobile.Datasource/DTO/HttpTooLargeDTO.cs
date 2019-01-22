@@ -1,6 +1,6 @@
-﻿namespace Eirpoint.Mobile.Datasource.Models
+﻿namespace Eirpoint.Mobile.Datasource.DTO
 {
-    public class HttpTooLargeModel
+    public class HttpTooLargeDTO
     {
         public string ErrorType { get; set; }
         public int MaximumRange { get; set; }

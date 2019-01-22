@@ -1,8 +1,10 @@
-﻿using Eirpoint.Mobile.Datasource.Api;
-using Eirpoint.Mobile.Datasource.Models;
+﻿using Acr.UserDialogs;
+using Eirpoint.Mobile.Datasource.Api;
+using Eirpoint.Mobile.Datasource.DTO;
 using Eirpoint.Mobile.Datasource.Repository.Base;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
 using Eirpoint.Mobile.Shared.NativeInterfaces;
+using Eirpoint.Mobile.Shared.Utils;
 using Newtonsoft.Json;
 using Platform.Ioc.Injection;
 using Refit;
@@ -17,19 +19,32 @@ namespace Eirpoint.Mobile.Datasource.Helpers
 {
     public class HttpHelper
     {
-        // Ranging parameters.
-        int totalItems = 0;
-        int maxItems = 0;
-        int percentageComplete = 0;
-        int headerStart = 0;
-        int headerEnd = 0;
-        int connectionTimes = 0;
-        bool isCompleted = false;
+        #region Constants
+
+        public const string INTERNET_CONN_FAULT = "Internet connetcion fault !";
+        public const string ERROR_HTTP_REQUEST = "Error http request ! Verify if has internet connection !";
+
+
+        #endregion
+
+        #region Fields
+
+        private int totalItems = 0;
+        private int maxItems = 0;
+        private int percentageComplete = 0;
+        private int headerStart = 0;
+        private int headerEnd = 0;
+        private bool isCompleted = false;
+
+        #endregion
 
         private bool IsConnected { get { return Injector.Resolver<IConnectivity>().IsConnected(); } }
 
-        public async Task Synchronize<T>(HttpClient httpClient, Action<int> onProgressCallback = null) where T : class
+        public async Task<HttpHelperResponseDTO> Synchronize<T>(HttpClient httpClient, Action<int> onProgressCallback = null) where T : class
         {
+            //declare result
+            var responseResult = new HttpHelperResponseDTO();
+
             // Request the resource.
             try
             {
@@ -69,6 +84,9 @@ namespace Eirpoint.Mobile.Datasource.Helpers
 
                             //set completed
                             isCompleted = true;
+
+                            //execute progress callback
+                            onProgressCallback?.Invoke(100);
                         }
                         else if (httpResponse.StatusCode == HttpStatusCode.NoContent)
                         {
@@ -78,6 +96,9 @@ namespace Eirpoint.Mobile.Datasource.Helpers
 
                             //set completed
                             isCompleted = true;
+
+                            //execute progress callback
+                            onProgressCallback?.Invoke(100);
                         }
                         else if (httpResponse.StatusCode == HttpStatusCode.RequestEntityTooLarge)
                         {
@@ -121,30 +142,35 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                         }
                     }
                 }
+                else
+                {                 
+                    //show toast dialog
+                    UserDialogs.Instance.Toast(INTERNET_CONN_FAULT, TimeSpan.FromSeconds(2));
+
+                    //set response
+                    responseResult.MessageError = INTERNET_CONN_FAULT;
+
+                    //return response
+                    return responseResult;
+                }
             }
             catch (Exception ex)
             {
-                throw ex;
-                //if (connectionTimes < 3)
-                //{
-                //    //add log of partial response inserted                
-                //    InsertRangeHeaderLog(typeof(T).ToString());
+                //change flag
+                isCompleted = false;
 
-                //    //wait 30 secondes to get connection again
-                //    await Task.Delay(30000);
+                //add log of partial response inserted                
+                InsertRangeHeaderLog(typeof(T).ToString(), ex.Message);
 
-                //    //increment connection times
-                //    connectionTimes++;
-                //}
-                //else
-                //{
-                //    //exit cicle
-                //    isCompleted = true;
+                //set response
+                responseResult.MessageError = ERROR_HTTP_REQUEST;
 
-                //    //TODO: treat the error in the view
-                //    throw ex;
-                //}
+                //show toast dialog
+                UserDialogs.Instance.Toast(ERROR_HTTP_REQUEST, TimeSpan.FromSeconds(2));
             }
+
+            //resturn response
+            return responseResult;
         }
 
 
@@ -227,7 +253,7 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                     try
                     {
                         var response = await httpResponse.Content.ReadAsStringAsync();
-                        var errorBody = await Task.Run(() => JsonConvert.DeserializeObject<HttpTooLargeModel>(response));
+                        var errorBody = await Task.Run(() => JsonConvert.DeserializeObject<HttpTooLargeDTO>(response));
 
                         totalItems = errorBody.TotalCount;
                         maxItems = errorBody.MaximumRange;
@@ -383,7 +409,7 @@ namespace Eirpoint.Mobile.Datasource.Helpers
         private async void DeserializeRequestTooLarge(Dictionary<string, string> headers, HttpResponseMessage httpResponse)
         {
             var response = await httpResponse.Content.ReadAsStringAsync();
-            var errorBody = await Task.Run(() => JsonConvert.DeserializeObject<HttpTooLargeModel>(response));
+            var errorBody = await Task.Run(() => JsonConvert.DeserializeObject<HttpTooLargeDTO>(response));
 
             totalItems = errorBody.TotalCount;
             maxItems = errorBody.MaximumRange;
@@ -433,10 +459,10 @@ namespace Eirpoint.Mobile.Datasource.Helpers
             return false;
         }
 
-        private async void InsertRangeHeaderLog(string dataItemName)
+        private async void InsertRangeHeaderLog(string dataItemName, string errorMessage)
         {
-            var rangeHeader = new RangeHeaderLog() { DataItem = dataItemName, StartRange = headerStart, EndRange = headerEnd, LogTime = DateTime.Now };
-            await Injector.Resolver<IPersistenceBase<RangeHeaderLog>>().Insert(rangeHeader);
+            var rangeHeader = new RangeHeaderLogEntity() { DataItem = dataItemName, StartRange = headerStart, EndRange = headerEnd, LogTime = DateTime.Now };
+            await Injector.Resolver<IPersistenceBase<RangeHeaderLogEntity>>().Insert(rangeHeader);
         }
     }
 }

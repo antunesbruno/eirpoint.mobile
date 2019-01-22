@@ -18,7 +18,9 @@ namespace Eirpoint.Mobile.Shared.Enumerators
         RECEIPT = 8,
         STOCKING_ATTRIBUTE_TYPE = 9,
         STOCK_LOCATION = 10,
-        USER_LIST = 11
+        USER_LIST = 11,
+        CUSTOMER = 12,
+        PROMOTIONS = 13
     }
 
     public static class AltoposResources
@@ -27,13 +29,15 @@ namespace Eirpoint.Mobile.Shared.Enumerators
         {
             Dictionary<AltoposResourcesEnum, string> dicResources = new Dictionary<AltoposResourcesEnum, string>();
 
+            dicResources.Add(AltoposResourcesEnum.CUSTOMER, "/customers");
             dicResources.Add(AltoposResourcesEnum.DEPARTMENT, "/departments");
             dicResources.Add(AltoposResourcesEnum.DISCOUNT, "/discounts");
-            dicResources.Add(AltoposResourcesEnum.GROUP_LIST, "/groups");
             dicResources.Add(AltoposResourcesEnum.PAYMENT_CATEGORY, "/paymentcategories");
+            dicResources.Add(AltoposResourcesEnum.GROUP_LIST, "/groups");            
             dicResources.Add(AltoposResourcesEnum.POS_STATION, "/posstations");
             dicResources.Add(AltoposResourcesEnum.PRODUCT, "/products");
             dicResources.Add(AltoposResourcesEnum.PRODUCT_BARCODE, "/productbarcodes");
+            dicResources.Add(AltoposResourcesEnum.PROMOTIONS, "/promotions");
             dicResources.Add(AltoposResourcesEnum.REASON, "/reasons");
             dicResources.Add(AltoposResourcesEnum.RECEIPT, "/receipttemplates");
             dicResources.Add(AltoposResourcesEnum.STOCKING_ATTRIBUTE_TYPE, "/stockingattributetypes");

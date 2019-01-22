@@ -7,7 +7,9 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
 {
     public class EntityBase
     {
-        [PrimaryKey]
+        [PrimaryKey, AutoIncrement]
+        public virtual int IdentityId { get; set; }
+        
         public virtual int Id { get; set; }
 
         public virtual string Href { get; set; }

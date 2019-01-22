@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
     <PackageReference Include="Refit" Version="4.6.58" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
   </ItemGroup>
