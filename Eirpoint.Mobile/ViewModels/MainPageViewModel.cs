@@ -7,6 +7,7 @@ using Platform.Ioc.Injection;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -35,7 +36,7 @@ namespace Eirpoint.Mobile.ViewModels
             LbResults = "Status Barcode and Read Value :";
 
             //products button action
-            PerformProductsCommand = new DelegateCommand(PerformProducts);
+            PerformBasicDataCommand = new DelegateCommand(PerformBasicData);
 
             //products button action
             SearchBarcodeCommand = new DelegateCommand(SearchBarcode);
@@ -145,25 +146,35 @@ namespace Eirpoint.Mobile.ViewModels
 
         #region Delegates
 
-        public DelegateCommand PerformProductsCommand { get; set; }
+        public DelegateCommand PerformBasicDataCommand { get; set; }
         public DelegateCommand SearchBarcodeCommand { get; set; }
 
         #endregion
 
         #region Methods        
 
-        private async void PerformProducts()
+        private async void PerformBasicData()
         {
-            //declare progress dialog
-            ProgressDialog = UserDialogs.Instance.Progress("", null, null, false, MaskType.Black);
+            try
+            {
+                //declare progress dialog
+                ProgressDialog = UserDialogs.Instance.Progress("", null, null, false, MaskType.Black);
 
-            //start synchronism
-            await Injector.Resolver<IBasicDataApiCore>().SynchronizeDataItems(UpdateProgressBar, ProgressDialog);
-         
-            //    //inform user about finish process
-            //    await _dialogService.DisplayAlertAsync("Perform Products", "Products downloaded and saved successfully !", "OK");
+                //start synchronism
+                await Injector.Resolver<IBasicDataApiCore>().SynchronizeDataItems(UpdateProgressBar, ProgressDialog);
 
+                //dispose dialog
+                ProgressDialog.Hide();
 
+                //inform user about finish process
+                await _dialogService.DisplayAlertAsync("Synchronize", "Basic data synchronized successfully !", "OK");
+
+            }
+            catch (Exception ex)
+            {
+                //inform user about finish process
+                await _dialogService.DisplayAlertAsync("Synchronize Error", "Basic data synchronized failed !", "OK");
+            }
         }
 
         private async void SearchBarcode()
@@ -183,7 +194,7 @@ namespace Eirpoint.Mobile.ViewModels
         {
             Task.Run(() =>
              {
-                 _progressDialog.PercentComplete = percent;
+                 ProgressDialog.PercentComplete = percent;
              });
         }
 

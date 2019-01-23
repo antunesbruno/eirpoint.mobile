@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Eirpoint.Mobile.Datasource.Repository.Entity
 {
-    [Table("Barcodes")]
-    public class BarcodesEntity : EntityBase
+    [Table("ProductBarcodes")]
+    public class ProductBarCodesEntity : EntityBase
     {
         public int? ProductId { get; set; }
         public string Barcode { get; set; }
-        public bool IsDefault { get; set; }
-        public int StockItemId { get; set; }
+        public bool? IsDefault { get; set; }
+        public int? StockItemId { get; set; }
         public string SyncUpdateTimestamp { get; set; }
         public string SyncInsertTimestamp { get; set; }
         public DateTime? LastModified { get; set; }
@@ -25,6 +25,5 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
 
         [Ignore]
         public List<Self> Self { get; set; }
-
     }
 }

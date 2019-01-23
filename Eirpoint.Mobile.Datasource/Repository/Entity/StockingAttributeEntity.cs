@@ -5,8 +5,9 @@ using System.Text;
 
 namespace Eirpoint.Mobile.Datasource.Repository.Entity
 {
-    [Table("StockingAttributeTypeE")]
-    public class StockingAttributeTypeEEntity : EntityBase
-    {
+    [Table("StockingAttribute")]
+    public class StockingAttributeEntity : EntityBase
+    {       
+
     }
 }

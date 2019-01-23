@@ -6,25 +6,21 @@ using System.Text;
 
 namespace Eirpoint.Mobile.Datasource.Repository.Entity
 {
-    [Table("Barcodes")]
-    public class BarcodesEntity : EntityBase
+    [Table("StockingAttributeTypes")]
+    public class StockingAttributeTypeEntity : EntityBase
     {
-        public int? ProductId { get; set; }
-        public string Barcode { get; set; }
-        public bool IsDefault { get; set; }
-        public int StockItemId { get; set; }
+        public string Description { get; set; }
+        public string ExternalStockingAttributeTypeCode { get; set; }
         public string SyncUpdateTimestamp { get; set; }
         public string SyncInsertTimestamp { get; set; }
         public DateTime? LastModified { get; set; }
+        public bool? Active { get; set; }
 
         [Ignore]
-        public List<Self> Product { get; set; }
-
-        [Ignore]
-        public List<Self> StockItem { get; set; }
+        public List<Self> StockingAttributes { get; set; }
 
         [Ignore]
         public List<Self> Self { get; set; }
-
     }
 }
+

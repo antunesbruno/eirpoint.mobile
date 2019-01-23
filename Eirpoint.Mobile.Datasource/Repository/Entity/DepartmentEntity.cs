@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Eirpoint.Mobile.Datasource.Repository.Urls;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,9 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public DateTime? LastModified { get; set; }
 
         [Ignore]
-        public List<SubDepartmentEntity> SubDepartments { get; set; }
+        public List<SubDepartmentsEntity> SubDepartments { get; set; }
+
+        [Ignore]
+        public List<Self> Self { get; set; }
     }
 }

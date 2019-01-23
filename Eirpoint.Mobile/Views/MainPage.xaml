@@ -70,7 +70,7 @@
                 <Frame CornerRadius="1" BorderColor="Silver" Margin="5,5,5,5">
                     <StackLayout Orientation="Vertical" Padding="5,5,5,5">
                         <StackLayout HorizontalOptions="StartAndExpand">
-                            <Button x:Name="btn_getProducts" Text="Download All Products" Command="{Binding PerformProductsCommand}" />
+                            <Button x:Name="btn_getProducts" Text="Synchronize Basic Data" Command="{Binding PerformBasicDataCommand}" />
                         </StackLayout>
                     </StackLayout>
                 </Frame>

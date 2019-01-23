@@ -17,21 +17,22 @@ namespace Eirpoint.Mobile.Datasource.Helpers
 
         public void CreateTables()
         {
-            PlatformDatabase.CreateTable<ProductsEntity>();
-            PlatformDatabase.CreateTable<BarcodesEntity>();
-            PlatformDatabase.CreateTable<CreatedByUserEntity>();
-            PlatformDatabase.CreateTable<DepartmentEntity>();
-            PlatformDatabase.CreateTable<PacksEntity>();
-            PlatformDatabase.CreateTable<SaleLocationsEntity>();
-            PlatformDatabase.CreateTable<SeasonEntity>();
-            PlatformDatabase.CreateTable<StockItemsEntity>();
-            PlatformDatabase.CreateTable<TaxCategoryEntity>();
-            PlatformDatabase.CreateTable<SelfEntity>();
-            PlatformDatabase.CreateTable<SubDepartmentEntity>();
-            PlatformDatabase.CreateTable<RangeHeaderLogEntity>();
             PlatformDatabase.CreateTable<CustomersEntity>();
-            
-
+            PlatformDatabase.CreateTable<DepartmentEntity>();
+            PlatformDatabase.CreateTable<DiscountsEntity>();
+            PlatformDatabase.CreateTable<PaymentsCategoriesEntity>();
+            PlatformDatabase.CreateTable<GroupsEntity>();
+            PlatformDatabase.CreateTable<PosStationsEntity>();
+            PlatformDatabase.CreateTable<ProductsEntity>();
+            PlatformDatabase.CreateTable<ProductBarCodesEntity>();
+            PlatformDatabase.CreateTable<PromotionsEntity>();
+            PlatformDatabase.CreateTable<ReasonsEntity>();
+            PlatformDatabase.CreateTable<ReceiptTemplatesEntity>();
+            PlatformDatabase.CreateTable<StockingAttributeTypeEntity>();
+            PlatformDatabase.CreateTable<StockLocationsEntity>();
+            PlatformDatabase.CreateTable<UsersEntity>();
+            PlatformDatabase.CreateTable<BarcodesEntity>();
+            PlatformDatabase.CreateTable<RangeHeaderLogEntity>();                    
         }
     }
 }

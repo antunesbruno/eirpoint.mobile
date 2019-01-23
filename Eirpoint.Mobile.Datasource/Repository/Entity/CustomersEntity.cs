@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Eirpoint.Mobile.Datasource.Repository.Urls;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Text;
 namespace Eirpoint.Mobile.Datasource.Repository.Entity
 {
     [Table("Customers")]
-    public class CustomersEntity
+    public class CustomersEntity : EntityBase
     {
-        public int? Id { get; set; }
         public bool? Active { get; set; }
         public string Name { get; set; }
         public DateTime? CustomerSince { get; set; }
@@ -55,12 +55,10 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public string LoyaltyScheme { get; set; }
         public string HomeLocation { get; set; }
 
-        [Ignore]
-        public List<string> IdentificationCodes { get; set; }
-
-        [Ignore]
-        public SelfEntity Self { get; set; }
-
+        //[Ignore]
+        //public List<IdentificationCodesEntity> IdentificationCodes { get; set; }
         
+        //[Ignore]
+        //public Self Self { get; set; }        
     }
 }

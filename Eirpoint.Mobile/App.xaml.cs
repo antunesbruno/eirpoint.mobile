@@ -72,11 +72,23 @@ namespace Eirpoint.Mobile
         {
             //datasource
             Injector.RegisterType<DatabaseHelper, IDatabaseHelper>();
-            Injector.RegisterType<PersistenceBase<ProductsEntity>, IPersistenceBase<ProductsEntity>>();
-            Injector.RegisterType<PersistenceBase<RangeHeaderLogEntity>, IPersistenceBase<RangeHeaderLogEntity>>();
-            Injector.RegisterType<PersistenceBase<DepartmentEntity>, IPersistenceBase<DepartmentEntity>>();
             Injector.RegisterType<PersistenceBase<CustomersEntity>, IPersistenceBase<CustomersEntity>>();
-
+            Injector.RegisterType<PersistenceBase<DepartmentEntity>, IPersistenceBase<DepartmentEntity>>();
+            Injector.RegisterType<PersistenceBase<DiscountsEntity>, IPersistenceBase<DiscountsEntity>>();
+            Injector.RegisterType<PersistenceBase<PaymentsCategoriesEntity>, IPersistenceBase<PaymentsCategoriesEntity>>();
+            Injector.RegisterType<PersistenceBase<GroupsEntity>, IPersistenceBase<GroupsEntity>>();
+            Injector.RegisterType<PersistenceBase<PosStationsEntity>, IPersistenceBase<PosStationsEntity>>();
+            Injector.RegisterType<PersistenceBase<ProductsEntity>, IPersistenceBase<ProductsEntity>>();
+            Injector.RegisterType<PersistenceBase<ProductBarCodesEntity>, IPersistenceBase<ProductBarCodesEntity>>();
+            Injector.RegisterType<PersistenceBase<PromotionsEntity>, IPersistenceBase<PromotionsEntity>>();
+            Injector.RegisterType<PersistenceBase<ReasonsEntity>, IPersistenceBase<ReasonsEntity>>();
+            Injector.RegisterType<PersistenceBase<ReceiptTemplatesEntity>, IPersistenceBase<ReceiptTemplatesEntity>>();
+            Injector.RegisterType<PersistenceBase<StockingAttributeTypeEntity>, IPersistenceBase<StockingAttributeTypeEntity>>();
+            Injector.RegisterType<PersistenceBase<StockLocationsEntity>, IPersistenceBase<StockLocationsEntity>>();
+            Injector.RegisterType<PersistenceBase<UsersEntity>, IPersistenceBase<UsersEntity>>();
+            Injector.RegisterType<PersistenceBase<BarcodesEntity>, IPersistenceBase<BarcodesEntity>>();
+            Injector.RegisterType<PersistenceBase<RangeHeaderLogEntity>, IPersistenceBase<RangeHeaderLogEntity>>();
+       
             //core api
             Injector.RegisterType<ProductsApi, IProductsApiCore>();
             Injector.RegisterType<BarcodeProductsApi, IBarcodeProductsApiCore>();
