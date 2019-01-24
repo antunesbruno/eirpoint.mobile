@@ -21,30 +21,5 @@ namespace Eirpoint.Mobile.Shared.Enumerators
         USER_LIST = 11,
         CUSTOMER = 12,
         PROMOTIONS = 13
-    }
-
-    public static class AltoposResources
-    {
-        public static Dictionary<AltoposResourcesEnum, string> GetValues()
-        {
-            Dictionary<AltoposResourcesEnum, string> dicResources = new Dictionary<AltoposResourcesEnum, string>();
-
-            dicResources.Add(AltoposResourcesEnum.CUSTOMER, "/customers");
-            dicResources.Add(AltoposResourcesEnum.DEPARTMENT, "/departments");
-            dicResources.Add(AltoposResourcesEnum.DISCOUNT, "/discounts");
-            dicResources.Add(AltoposResourcesEnum.PAYMENT_CATEGORY, "/paymentcategories");
-            dicResources.Add(AltoposResourcesEnum.GROUP_LIST, "/groups");            
-            dicResources.Add(AltoposResourcesEnum.POS_STATION, "/posstations");
-            dicResources.Add(AltoposResourcesEnum.PRODUCT, "/products");
-            dicResources.Add(AltoposResourcesEnum.PRODUCT_BARCODE, "/productbarcodes");
-            dicResources.Add(AltoposResourcesEnum.PROMOTIONS, "/promotions");
-            dicResources.Add(AltoposResourcesEnum.REASON, "/reasons");
-            dicResources.Add(AltoposResourcesEnum.RECEIPT, "/receipttemplates");
-            dicResources.Add(AltoposResourcesEnum.STOCKING_ATTRIBUTE_TYPE, "/stockingattributetypes");
-            dicResources.Add(AltoposResourcesEnum.STOCK_LOCATION, "/stocklocations");
-            dicResources.Add(AltoposResourcesEnum.USER_LIST, "/users");
-
-            return dicResources;
-        }
-    }
+    }       
 }

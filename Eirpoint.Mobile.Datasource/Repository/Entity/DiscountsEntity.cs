@@ -19,7 +19,7 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public DateTime? LastModified { get; set; }
         public bool? Active { get; set; }
 
-        [Ignore]
-        public List<Self> Self { get; set; }
+        //[Ignore]
+        //public List<Self> Self { get; set; }
     }
 }

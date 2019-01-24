@@ -7,6 +7,7 @@ using Eirpoint.Mobile.Datasource.Repository.Base;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
 using Eirpoint.Mobile.Shared;
 using Eirpoint.Mobile.Shared.Barcode;
+using Eirpoint.Mobile.Shared.Interfaces;
 using Eirpoint.Mobile.Shared.NativeInterfaces;
 using Eirpoint.Mobile.ViewModels;
 using Eirpoint.Mobile.Views;
@@ -30,6 +31,8 @@ namespace Eirpoint.Mobile
 
         public App(IPlatformInitializer initializer) : base(initializer)
         {
+            //start monitor
+            Injector.Resolver<IMonitorService>().CreateUpdateDataMonitor();
         }
 
         protected override async void OnInitialized()
@@ -102,7 +105,7 @@ namespace Eirpoint.Mobile
 
             //native interfaces
             Injector.RegisterType<NativeConnectivity, IConnectivity>();
-
+            Injector.RegisterType<MonitorService, IMonitorService>();
         }
     }
 }

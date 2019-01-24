@@ -9,4 +9,10 @@ namespace Eirpoint.Mobile.Datasource.Api
         [Get("")]
         Task<HttpResponseMessage> GetAll();
     }
+
+    public interface IGenericApi
+    {
+        [Get("")]
+        Task<HttpResponseMessage> GetAll();
+    }
 }

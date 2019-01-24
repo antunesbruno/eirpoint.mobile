@@ -32,7 +32,7 @@ namespace Eirpoint.Mobile.Core.Api
             //declare response
             HttpHelperResponseDTO _httpResponseDTO = new HttpHelperResponseDTO();
 
-            foreach (var endpoint in AltoposResources.GetValues())
+            foreach (var endpoint in EntityResourcesHelper.GetValues())
             {
                 //complement endpoint (in this case because is using a generic method in refit)
                 _httpClient = Endpoints.BaseEirpointHttpClient(endpoint.Value.ToString());
@@ -44,71 +44,71 @@ namespace Eirpoint.Mobile.Core.Api
                             _httpResponseDTO = await ConfigureSynchronism<CustomersEntity>("Customers...");
                             break;
                         }
-                    //case AltoposResourcesEnum.DEPARTMENT:
-                    //    {
-                    //        _httpResponseDTO = await ConfigureSynchronism<DepartmentEntity>("Departments...");
-                    //        break;
-                    //    }
-                        //case AltoposResourcesEnum.DISCOUNT:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<DiscountsEntity>("Discounts...");
-                        //        break;
-                        //    }
-                        //case AltoposResourcesEnum.PAYMENT_CATEGORY:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<PaymentsCategoriesEntity>("Payments Categories...");
-                        //        break;
-                        //    }
-                        //case AltoposResourcesEnum.GROUP_LIST:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<GroupsEntity>("Groups...");
-                        //        break;
-                        //    }
-                        //case AltoposResourcesEnum.POS_STATION:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<PosStationsEntity>("PosStations...");
-                        //        break;
-                        //    }
-                        //case AltoposResourcesEnum.PRODUCT:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<ProductsEntity>("Products...");
-                        //        break;
-                        //    }
-                        //case AltoposResourcesEnum.PRODUCT_BARCODE:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<ProductBarCodesEntity>("Products Barcodes...");
-                        //        break;
-                        //    }
-                        //case AltoposResourcesEnum.PROMOTIONS:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<PromotionsEntity>("Promotions...");
-                        //        break;
-                        //    }
-                        //case AltoposResourcesEnum.REASON:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<ReasonsEntity>("Reasons...");
-                        //        break;
-                        //    }
-                        //case AltoposResourcesEnum.RECEIPT:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<ReceiptTemplatesEntity>("Receipt Templates...");
-                        //        break;
-                        //    }
-                        //case AltoposResourcesEnum.STOCKING_ATTRIBUTE_TYPE:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<StockingAttributeTypeEntity>("Stocking Attributes Types...");
-                        //        break;
-                        //    }
-                        //case AltoposResourcesEnum.STOCK_LOCATION:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<StockLocationsEntity>("Stocking Locations...");
-                        //        break;
-                        //    }
-                        //case AltoposResourcesEnum.USER_LIST:
-                        //    {
-                        //        _httpResponseDTO = await ConfigureSynchronism<UsersEntity>("Users...");
-                        //        break;
-                        //    }
+                    case AltoposResourcesEnum.DEPARTMENT:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<DepartmentEntity>("Departments...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.DISCOUNT:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<DiscountsEntity>("Discounts...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.PAYMENT_CATEGORY:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<PaymentsCategoriesEntity>("Payments Categories...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.GROUP_LIST:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<GroupsEntity>("Groups...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.POS_STATION:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<PosStationsEntity>("PosStations...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.PRODUCT:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<ProductsEntity>("Products...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.PRODUCT_BARCODE:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<ProductBarCodesEntity>("Products Barcodes...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.PROMOTIONS:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<PromotionsEntity>("Promotions...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.REASON:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<ReasonsEntity>("Reasons...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.RECEIPT:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<ReceiptTemplatesEntity>("Receipt Templates...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.STOCKING_ATTRIBUTE_TYPE:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<StockingAttributeTypeEntity>("Stocking Attributes Types...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.STOCK_LOCATION:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<StockLocationsEntity>("Stocking Locations...");
+                            break;
+                        }
+                    case AltoposResourcesEnum.USER_LIST:
+                        {
+                            _httpResponseDTO = await ConfigureSynchronism<UsersEntity>("Users...");
+                            break;
+                        }
                 }
 
                 //if error stop cycle and return to view

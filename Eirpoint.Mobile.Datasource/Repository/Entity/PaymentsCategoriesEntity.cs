@@ -30,10 +30,10 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public bool? Active { get; set; }
         public bool? ShowOnHandheld { get; set; }
 
-        [Ignore]
-        public List<Self> PaymentTypes { get; set; }
+        //[Ignore]
+        //public List<Self> PaymentTypes { get; set; }
 
-        [Ignore]
-        public List<Self> Self { get; set; }
+        //[Ignore]
+        //public List<Self> Self { get; set; }
     }
 }

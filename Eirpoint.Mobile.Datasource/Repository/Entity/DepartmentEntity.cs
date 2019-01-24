@@ -15,10 +15,10 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public string SyncInsertTimestamp { get; set; }
         public DateTime? LastModified { get; set; }
 
-        [Ignore]
-        public List<SubDepartmentsEntity> SubDepartments { get; set; }
+        //[Ignore]
+        //public List<SubDepartmentsEntity> SubDepartments { get; set; }
 
-        [Ignore]
-        public List<Self> Self { get; set; }
+        //[Ignore]
+        //public List<Self> Self { get; set; }
     }
 }

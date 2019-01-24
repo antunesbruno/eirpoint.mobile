@@ -94,64 +94,64 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public bool RestrictedSaleLocations { get; set; }
         public int? ShelflifeInDays { get; set; }        
 
-        [Ignore]
-        public List<Self> SubDepartment { get; set; }
+        //[Ignore]
+        //public List<Self> SubDepartment { get; set; }
 
-        [Ignore]
-        public List<Self> Department { get; set; }
+        //[Ignore]
+        //public List<Self> Department { get; set; }
 
-        [Ignore]
-        public List<Self> Barcodes { get; set; }
+        //[Ignore]
+        //public List<Self> Barcodes { get; set; }
 
-        [Ignore]
-        public List<Self> StockItems { get; set; }
+        //[Ignore]
+        //public List<Self> StockItems { get; set; }
 
-        [Ignore]
-        public List<Self> Packs { get; set; }
+        //[Ignore]
+        //public List<Self> Packs { get; set; }
 
-        [Ignore]
-        public List<Self> Season { get; set; }
+        //[Ignore]
+        //public List<Self> Season { get; set; }
 
-        [Ignore]
-        public List<Self> TaxCategory { get; set; }
+        //[Ignore]
+        //public List<Self> TaxCategory { get; set; }
 
-        [Ignore]
-        public List<Self> CreatedByUser { get; set; }
+        //[Ignore]
+        //public List<Self> CreatedByUser { get; set; }
 
-        [Ignore]
-        public List<Self> SaleLocations { get; set; }
+        //[Ignore]
+        //public List<Self> SaleLocations { get; set; }
 
-        [Ignore]
-        public List<Self> Self { get; set; }
+        //[Ignore]
+        //public List<Self> Self { get; set; }
 
-        [Ignore]
-        public List<Self> StockingAttributeA { get; set; }
+        //[Ignore]
+        //public List<Self> StockingAttributeA { get; set; }
 
-        [Ignore]
-        public List<Self> StockingAttributeB { get; set; }
+        //[Ignore]
+        //public List<Self> StockingAttributeB { get; set; }
 
-        [Ignore]
-        public List<Self> StockingAttributeC { get; set; }
+        //[Ignore]
+        //public List<Self> StockingAttributeC { get; set; }
 
-        [Ignore]
-        public List<Self> StockingAttributeD { get; set; }
+        //[Ignore]
+        //public List<Self> StockingAttributeD { get; set; }
 
-        [Ignore]
-        public List<Self> StockingAttributeE { get; set; }
+        //[Ignore]
+        //public List<Self> StockingAttributeE { get; set; }
 
-        [Ignore]
-        public List<Self> StockingAttributeTypeA { get; set; }
+        //[Ignore]
+        //public List<Self> StockingAttributeTypeA { get; set; }
 
-        [Ignore]
-        public List<Self> StockingAttributeTypeB { get; set; }
+        //[Ignore]
+        //public List<Self> StockingAttributeTypeB { get; set; }
 
-        [Ignore]
-        public List<Self> StockingAttributeTypeC { get; set; }
+        //[Ignore]
+        //public List<Self> StockingAttributeTypeC { get; set; }
 
-        [Ignore]
-        public List<Self> StockingAttributeTypeD { get; set; }
+        //[Ignore]
+        //public List<Self> StockingAttributeTypeD { get; set; }
 
-        [Ignore]
-        public List<Self> StockingAttributeTypeE { get; set; }
+        //[Ignore]
+        //public List<Self> StockingAttributeTypeE { get; set; }
     }
 }

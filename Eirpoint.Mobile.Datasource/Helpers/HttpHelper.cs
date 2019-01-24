@@ -3,6 +3,7 @@ using Eirpoint.Mobile.Datasource.Api;
 using Eirpoint.Mobile.Datasource.DTO;
 using Eirpoint.Mobile.Datasource.Repository.Base;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
+using Eirpoint.Mobile.Shared.Enumerators;
 using Eirpoint.Mobile.Shared.NativeInterfaces;
 using Eirpoint.Mobile.Shared.Utils;
 using Newtonsoft.Json;
@@ -40,6 +41,13 @@ namespace Eirpoint.Mobile.Datasource.Helpers
 
         private bool IsConnected { get { return Injector.Resolver<IConnectivity>().IsConnected(); } }
 
+        /// <summary>
+        /// Syncronize items first time (Basic data of items)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="httpClient"></param>
+        /// <param name="onProgressCallback"></param>
+        /// <returns></returns>
         public async Task<HttpHelperResponseDTO> Synchronize<T>(HttpClient httpClient, Action<int> onProgressCallback = null) where T : class
         {
             //declare result
@@ -143,7 +151,7 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                     }
                 }
                 else
-                {                 
+                {
                     //show toast dialog
                     UserDialogs.Instance.Toast(INTERNET_CONN_FAULT, TimeSpan.FromSeconds(2));
 
@@ -349,6 +357,95 @@ namespace Eirpoint.Mobile.Datasource.Helpers
             return deserializedResponse;
         }
 
+        /// <summary>
+        /// Update database based in the lastupdate tag
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="httpClient"></param>
+        /// <param name="onProgressCallback"></param>
+        /// <returns></returns>
+        public async Task SynchronizeBackground<T>(HttpClient httpClient) where T : EntityBase
+        {
+            //declare result
+            var responseResult = new HttpHelperResponseDTO();
+
+            // Request the resource.
+            try
+            {
+                //headers
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+
+                //response http
+                HttpResponseMessage httpResponse;
+
+                //is completed all requests
+                isCompleted = false;
+
+                //if has internet connection
+                if (IsConnected)
+                {
+                    // Loop until the whole query is fulfilled.
+                    while (!isCompleted)
+                    {
+                        //add headers
+                        AddDefaultRequestHeader(headers, httpClient);
+
+                        //set the request
+                        var httpRequest = RestService.For<IGenericApi<T, string>>(httpClient);
+
+                        //get response
+                        httpResponse = await httpRequest.GetAll();
+
+                        // Examine the response to determine success or failure, and if 
+                        // further requests are required.                
+                        if (httpResponse.StatusCode == HttpStatusCode.OK)
+                        {
+                            // 200 OK suggests that all the data we requested was returned.
+                            DeserializeInsertOrUpdateResponse<T>(httpResponse);
+
+                            //set completed
+                            isCompleted = true;
+                        }
+                        else if (httpResponse.StatusCode == HttpStatusCode.RequestEntityTooLarge)
+                        {
+                            //deserialize large request and set headers
+                            DeserializeRequestTooLarge(headers, httpResponse);
+
+                            //set completed
+                            isCompleted = false;
+
+                        }
+                        else if (httpResponse.StatusCode == HttpStatusCode.PartialContent)
+                        {
+                            //if partial deserialize and verify if insert or update data items
+                            isCompleted = await DeserializeInsertOrUpdatePartialResponse<T>(headers, httpClient, httpResponse);
+                        }                       
+                        else
+                        {
+                            // Report other HTTP responses back to the caller. 
+                            var errorBody = await httpResponse.Content.ReadAsStringAsync();
+
+                            //set completed
+                            isCompleted = true;
+                        }
+                    }
+                }           
+            }
+            catch (Exception ex)
+            {
+                //change flag
+                isCompleted = false;
+
+                //add log of partial response inserted                
+                InsertRangeHeaderLog(typeof(T).ToString(), ex.Message);
+
+                //set response
+                responseResult.MessageError = ERROR_HTTP_REQUEST;
+
+                //show toast dialog
+                UserDialogs.Instance.Toast(ERROR_HTTP_REQUEST, TimeSpan.FromSeconds(2));
+            }
+        }
 
         /// <summary>
         /// Configure range header
@@ -390,13 +487,22 @@ namespace Eirpoint.Mobile.Datasource.Helpers
             headers.Add("Range", headerValue);
         }
 
-
+        /// <summary>
+        /// Add the default request headers
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <param name="httpClient"></param>
         private void AddDefaultRequestHeader(Dictionary<string, string> headers, HttpClient httpClient)
         {
             foreach (var keyValue in headers)
                 httpClient.DefaultRequestHeaders.Add(keyValue.Key, keyValue.Value);
         }
 
+        /// <summary>
+        /// Deserialize the response by the entity T and insert in database
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="httpResponse"></param>
         private async void DeserializeAndInsertResponse<T>(HttpResponseMessage httpResponse) where T : class
         {
             var response = await httpResponse.Content.ReadAsStringAsync();
@@ -406,6 +512,39 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                 await Injector.Resolver<IPersistenceBase<T>>().InsertAll(deserializedResponse);
         }
 
+        /// <summary>
+        /// Deserialize item and verify if exists in database, if yes update else insert
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="httpResponse"></param>
+        private async void DeserializeInsertOrUpdateResponse<T>(HttpResponseMessage httpResponse) where T : EntityBase
+        {
+            var response = await httpResponse.Content.ReadAsStringAsync();
+            var deserializedResponse = await Task.Run(() => JsonConvert.DeserializeObject<List<T>>(response));
+
+            if (deserializedResponse != null)
+            {
+                foreach (var item in deserializedResponse)
+                {
+                    var hasItem = Injector.Resolver<IPersistenceBase<T>>().Get(s => ((EntityBase)s).Id.Equals(((EntityBase)item).Id)).Result;
+
+                    if (hasItem != null)
+                    {
+                        await Injector.Resolver<IPersistenceBase<T>>().Update(item);
+                    }
+                    else
+                    {
+                        await Injector.Resolver<IPersistenceBase<T>>().Insert(item);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deserialize a Large item header
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <param name="httpResponse"></param>
         private async void DeserializeRequestTooLarge(Dictionary<string, string> headers, HttpResponseMessage httpResponse)
         {
             var response = await httpResponse.Content.ReadAsStringAsync();
@@ -417,6 +556,14 @@ namespace Eirpoint.Mobile.Datasource.Helpers
             SetRangeHeader(headers, 0, totalItems, maxItems);
         }
 
+        /// <summary>
+        /// Deserialize and insert the itens getted by partial response
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="headers"></param>
+        /// <param name="httpClient"></param>
+        /// <param name="httpResponse"></param>
+        /// <returns></returns>
         private async Task<bool> DeserializeAndInsertPartialResponse<T>(Dictionary<string, string> headers, HttpClient httpClient, HttpResponseMessage httpResponse) where T : class
         {
             var response = await httpResponse.Content.ReadAsStringAsync();
@@ -453,16 +600,85 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                 totalItems = parsedRangeHeader.getTotal();
 
             //set percentage
-            if (totalItems > 0)              
+            if (totalItems > 0)
                 percentageComplete = parsedRangeHeader.getEnd() * 100 / totalItems;
 
             return false;
         }
 
+        /// <summary>
+        /// Deserialize and insert or update the  partial response
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="headers"></param>
+        /// <param name="httpClient"></param>
+        /// <param name="httpResponse"></param>
+        /// <returns></returns>
+        private async Task<bool> DeserializeInsertOrUpdatePartialResponse<T>(Dictionary<string, string> headers, HttpClient httpClient, HttpResponseMessage httpResponse) where T : EntityBase
+        {
+            var response = await httpResponse.Content.ReadAsStringAsync();
+            var partialResponse = await Task.Run(() => JsonConvert.DeserializeObject<List<T>>(response));
+
+            //get range header
+            string rangeHeader = httpResponse.Content.Headers.GetValues("Content-Range").FirstOrDefault();
+            ContentRangeHeaderHelper parsedRangeHeader = new ContentRangeHeaderHelper(rangeHeader);
+
+            if (parsedRangeHeader.isFinal())
+            {
+                //iscompleted process
+                return true;
+            }
+            else
+            {
+                //clean httpclient header range
+                httpClient.DefaultRequestHeaders.Remove("Range");
+
+                SetRangeHeader(
+                        headers,
+                        parsedRangeHeader.getEnd(),
+                        parsedRangeHeader.getTotal(),
+                        maxItems
+                    );
+            }
+
+            //add partial response                  
+            if (partialResponse != null)
+            {
+                foreach (var item in partialResponse)
+                {
+                    var hasItem = Injector.Resolver<IPersistenceBase<T>>().Get(s => ((EntityBase)s).Id.Equals(((EntityBase)item).Id)).Result;
+
+                    if (hasItem != null)
+                    {
+                        await Injector.Resolver<IPersistenceBase<T>>().Update(item);
+                    }
+                    else
+                    {
+                        await Injector.Resolver<IPersistenceBase<T>>().Insert(item);
+                    }
+                }
+            }
+
+            // Record the totalItems if not already set, and report progress.
+            if (totalItems == 0)
+                totalItems = parsedRangeHeader.getTotal();
+
+            //set percentage
+            if (totalItems > 0)
+                percentageComplete = parsedRangeHeader.getEnd() * 100 / totalItems;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Insert in the log table the partial response that failed
+        /// </summary>
+        /// <param name="dataItemName">The entity name</param>
+        /// <param name="errorMessage">Message of erro ocurred</param>
         private async void InsertRangeHeaderLog(string dataItemName, string errorMessage)
         {
             var rangeHeader = new RangeHeaderLogEntity() { DataItem = dataItemName, StartRange = headerStart, EndRange = headerEnd, LogTime = DateTime.Now };
             await Injector.Resolver<IPersistenceBase<RangeHeaderLogEntity>>().Insert(rangeHeader);
-        }
+        }      
     }
 }

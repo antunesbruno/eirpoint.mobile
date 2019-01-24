@@ -17,7 +17,8 @@ namespace Eirpoint.Mobile.ViewModels
     {
         #region Fields
 
-        IPageDialogService _dialogService;        
+        IPageDialogService _dialogService;
+        IProgressDialog _progressDialog;
 
         #endregion
 
@@ -54,17 +55,6 @@ namespace Eirpoint.Mobile.ViewModels
         #endregion
 
         #region Properties
-
-        private IProgressDialog _progressDialog;
-        public IProgressDialog ProgressDialog
-        {
-            get { return _progressDialog; }
-            set
-            {
-                SetProperty(ref _progressDialog, value);
-                RaisePropertyChanged(nameof(ProgressDialog));
-            }
-        }
 
         private double _pbProducts;
         public double PbProducts
@@ -158,22 +148,22 @@ namespace Eirpoint.Mobile.ViewModels
             try
             {
                 //declare progress dialog
-                ProgressDialog = UserDialogs.Instance.Progress("", null, null, false, MaskType.Black);
+                using (_progressDialog = UserDialogs.Instance.Progress("", null, null, false, MaskType.Black))
+                {
+                    //start synchronism
+                    await Injector.Resolver<IBasicDataApiCore>().SynchronizeDataItems(UpdateProgressBar, _progressDialog);
+                };
 
-                //start synchronism
-                await Injector.Resolver<IBasicDataApiCore>().SynchronizeDataItems(UpdateProgressBar, ProgressDialog);
-
-                //dispose dialog
-                ProgressDialog.Hide();
+                _progressDialog.Dispose();
+                _progressDialog.Hide();
 
                 //inform user about finish process
-                await _dialogService.DisplayAlertAsync("Synchronize", "Basic data synchronized successfully !", "OK");
-
+                await UserDialogs.Instance.AlertAsync("Basic data synchronized successfully !", "Synchronize", "OK");
             }
             catch (Exception ex)
             {
                 //inform user about finish process
-                await _dialogService.DisplayAlertAsync("Synchronize Error", "Basic data synchronized failed !", "OK");
+                await UserDialogs.Instance.AlertAsync("Basic data synchronized failed !", "Synchronize Error", "OK");
             }
         }
 
@@ -193,9 +183,9 @@ namespace Eirpoint.Mobile.ViewModels
         private void UpdateProgressBar(int percent)
         {
             Task.Run(() =>
-             {
-                 ProgressDialog.PercentComplete = percent;
-             });
+            {
+                _progressDialog.PercentComplete = percent;
+            });
         }
 
         private void UpdateRead(BarcodeReadArgs args)

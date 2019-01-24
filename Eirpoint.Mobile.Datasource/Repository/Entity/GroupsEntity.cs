@@ -17,13 +17,13 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public bool? CanDeliverOrders { get; set; }
         public DateTime? LastModified { get; set; }
 
-        [Ignore]
-        public List<Self> GroupPermissions { get; set; }
+        //[Ignore]
+        //public List<Self> GroupPermissions { get; set; }
 
-        [Ignore]
-        public List<Self> GroupUsers { get; set; }
+        //[Ignore]
+        //public List<Self> GroupUsers { get; set; }
 
-        [Ignore]
-        public List<Self> Self { get; set; }
+        //[Ignore]
+        //public List<Self> Self { get; set; }
     }
 }

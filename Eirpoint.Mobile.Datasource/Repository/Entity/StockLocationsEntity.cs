@@ -33,25 +33,25 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public bool? Active { get; set; }
         public string Country { get; set; }
 
-        [Ignore]
-        public List<Self> OrderReceiptTemplate { get; set; }
+        //[Ignore]
+        //public List<Self> OrderReceiptTemplate { get; set; }
 
-        [Ignore]
-        public List<Self> QuotationReceiptTemplate { get; set; }
+        //[Ignore]
+        //public List<Self> QuotationReceiptTemplate { get; set; }
 
-        [Ignore]
-        public List<Self> SaleReceiptTemplate { get; set; }
+        //[Ignore]
+        //public List<Self> SaleReceiptTemplate { get; set; }
 
-        [Ignore]
-        public List<Self> SaleReturnReceiptTemplate { get; set; }
+        //[Ignore]
+        //public List<Self> SaleReturnReceiptTemplate { get; set; }
 
-        [Ignore]
-        public List<Self> TaxArea { get; set; }
+        //[Ignore]
+        //public List<Self> TaxArea { get; set; }
 
-        [Ignore]
-        public List<Self> IntegrationSettings { get; set; }
+        //[Ignore]
+        //public List<Self> IntegrationSettings { get; set; }
 
-        [Ignore]
-        public List<Self> Self { get; set; }
+        //[Ignore]
+        //public List<Self> Self { get; set; }
     }
 }

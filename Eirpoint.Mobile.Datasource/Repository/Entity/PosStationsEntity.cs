@@ -21,11 +21,11 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public int? StationType { get; set; }
         public bool? Active { get; set; }
 
-        [Ignore]
-        public List<Self> StockLocation { get; set; }
+        //[Ignore]
+        //public List<Self> StockLocation { get; set; }
 
-        [Ignore]
-        public List<Self> Self { get; set; }
+        //[Ignore]
+        //public List<Self> Self { get; set; }
     }   
 
 }
