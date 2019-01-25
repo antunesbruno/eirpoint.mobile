@@ -5,6 +5,8 @@ using Eirpoint.Mobile.Datasource.DTO;
 using Eirpoint.Mobile.Datasource.Helpers;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
 using Eirpoint.Mobile.Shared.Enumerators;
+using Eirpoint.Mobile.Shared.Interfaces;
+using Platform.Ioc.Injection;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -17,7 +19,8 @@ namespace Eirpoint.Mobile.Core.Api
 
         private HttpClient _httpClient;
         private IProgressDialog _progressDialog;
-        Action<int> _onProgressCallback;
+        private Action<int> _onProgressCallback;
+        private bool _isSyncDone = true;
 
         #endregion
 
@@ -117,12 +120,21 @@ namespace Eirpoint.Mobile.Core.Api
                     //hide dialog
                     _progressDialog.Hide();
 
+                    //set sync to false
+                    _isSyncDone = false;
+
                     //finish cycle
                     break;
                 }
 
                 //hide dialog
                 _progressDialog.Hide();
+            }
+
+            if (_isSyncDone)
+            {
+                //update the basic data in the config informations
+                Injector.Resolver<IConfiguration>().HasBasicData = true;
             }
         }
 

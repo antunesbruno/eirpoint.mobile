@@ -15,7 +15,6 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public string SyncUpdateTimestamp { get; set; }
         public string SyncInsertTimestamp { get; set; }
         public bool? CanDeliverOrders { get; set; }
-        public DateTime? LastModified { get; set; }
 
         //[Ignore]
         //public List<Self> GroupPermissions { get; set; }

@@ -76,7 +76,7 @@ namespace Eirpoint.Mobile.Datasource.Repository.Base
 
             return collection;
         }
-
+     
         public async Task<int> Insert(T entity)
         {
             return await _db.InsertAsync(entity);

@@ -26,6 +26,6 @@ namespace Eirpoint.Mobile.Datasource.Repository.Base
 
         Task DeleteAll(IEnumerable<T> entity);
 
-        Task<int> Count(Expression<Func<T, bool>> predicate = null);
+        Task<int> Count(Expression<Func<T, bool>> predicate = null);       
     }
 }

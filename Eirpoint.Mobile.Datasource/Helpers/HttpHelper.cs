@@ -11,6 +11,7 @@ using Platform.Ioc.Injection;
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -25,7 +26,6 @@ namespace Eirpoint.Mobile.Datasource.Helpers
         public const string INTERNET_CONN_FAULT = "Internet connetcion fault !";
         public const string ERROR_HTTP_REQUEST = "Error http request ! Verify if has internet connection !";
 
-
         #endregion
 
         #region Fields
@@ -39,7 +39,14 @@ namespace Eirpoint.Mobile.Datasource.Helpers
 
         #endregion
 
+        #region Properties       
+
         private bool IsConnected { get { return Injector.Resolver<IConnectivity>().IsConnected(); } }
+
+        #endregion
+
+        #region Public Methods
+        
 
         /// <summary>
         /// Syncronize items first time (Basic data of items)
@@ -48,7 +55,7 @@ namespace Eirpoint.Mobile.Datasource.Helpers
         /// <param name="httpClient"></param>
         /// <param name="onProgressCallback"></param>
         /// <returns></returns>
-        public async Task<HttpHelperResponseDTO> Synchronize<T>(HttpClient httpClient, Action<int> onProgressCallback = null) where T : class
+        public async Task<HttpHelperResponseDTO> Synchronize<T>(HttpClient httpClient, Action<int> onProgressCallback = null) where T : EntityBase
         {
             //declare result
             var responseResult = new HttpHelperResponseDTO();
@@ -70,7 +77,8 @@ namespace Eirpoint.Mobile.Datasource.Helpers
 
                 //if has internet connection
                 if (IsConnected)
-                {
+                {                   
+
                     // Loop until the whole query is fulfilled.
                     while (!isCompleted)
                     {
@@ -364,7 +372,7 @@ namespace Eirpoint.Mobile.Datasource.Helpers
         /// <param name="httpClient"></param>
         /// <param name="onProgressCallback"></param>
         /// <returns></returns>
-        public async Task SynchronizeBackground<T>(HttpClient httpClient) where T : EntityBase
+        public async Task SynchronizeBackground<T>(string endpoint) where T : EntityBase
         {
             //declare result
             var responseResult = new HttpHelperResponseDTO();
@@ -384,6 +392,12 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                 //if has internet connection
                 if (IsConnected)
                 {
+                    //get lastmodifier filter
+                    var lastModifiedFilter = FilterLastModifiedRequest<T>();
+
+                    //complement endpoint (in this case because is using a generic method in refit)
+                    var httpClient = Endpoints.BaseEirpointHttpClient();
+
                     // Loop until the whole query is fulfilled.
                     while (!isCompleted)
                     {
@@ -391,10 +405,10 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                         AddDefaultRequestHeader(headers, httpClient);
 
                         //set the request
-                        var httpRequest = RestService.For<IGenericApi<T, string>>(httpClient);
+                        var httpRequest = RestService.For<IGenericApi>(httpClient);
 
                         //get response
-                        httpResponse = await httpRequest.GetAll();
+                        httpResponse = await httpRequest.GetAllLastModified(endpoint.Replace("/", ""), lastModifiedFilter);
 
                         // Examine the response to determine success or failure, and if 
                         // further requests are required.                
@@ -446,6 +460,34 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                 UserDialogs.Instance.Toast(ERROR_HTTP_REQUEST, TimeSpan.FromSeconds(2));
             }
         }
+
+
+        /// <summary>
+        /// Mount the string that filter the LastModified Items
+        /// </summary>
+        /// <param name="endpoint">final endpoint</param>
+        /// <returns></returns>
+        private string FilterLastModifiedRequest<T>() where T : EntityBase
+        {
+            //declare property
+            DateTime maxDateTime = DateTime.Now;
+
+            //get all items
+            var entityList = Injector.Resolver<IPersistenceBase<T>>().Get().Result.ToList();
+
+            //if has items
+            if (entityList?.Count > 0)
+            {
+                maxDateTime = entityList.Max(x => x.LastModified);
+            }
+
+            //return with like the date format 2008-03-09T16:05:07
+            return "gt~" + String.Format("{0:s}", maxDateTime);
+        }
+
+        #endregion
+
+        #region Private Methods        
 
         /// <summary>
         /// Configure range header
@@ -526,7 +568,7 @@ namespace Eirpoint.Mobile.Datasource.Helpers
             {
                 foreach (var item in deserializedResponse)
                 {
-                    var hasItem = Injector.Resolver<IPersistenceBase<T>>().Get(s => ((EntityBase)s).Id.Equals(((EntityBase)item).Id)).Result;
+                    var hasItem = Injector.Resolver<IPersistenceBase<T>>().Get(s => s.Id.Equals(item.Id)).Result;
 
                     if (hasItem != null)
                     {
@@ -679,6 +721,9 @@ namespace Eirpoint.Mobile.Datasource.Helpers
         {
             var rangeHeader = new RangeHeaderLogEntity() { DataItem = dataItemName, StartRange = headerStart, EndRange = headerEnd, LogTime = DateTime.Now };
             await Injector.Resolver<IPersistenceBase<RangeHeaderLogEntity>>().Insert(rangeHeader);
-        }      
+        }
+
+        #endregion
+
     }
 }

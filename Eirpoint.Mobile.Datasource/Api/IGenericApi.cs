@@ -14,5 +14,8 @@ namespace Eirpoint.Mobile.Datasource.Api
     {
         [Get("")]
         Task<HttpResponseMessage> GetAll();
+
+        [Get("/{endpoint}")]
+        Task<HttpResponseMessage> GetAllLastModified([AliasAs("endpoint")] string endpoint, [AliasAs("LastModified")] string lastModifiedDate);
     }
 }

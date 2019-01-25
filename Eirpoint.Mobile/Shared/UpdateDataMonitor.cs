@@ -1,14 +1,11 @@
-﻿using Eirpoint.Mobile.Datasource.Api;
-using Eirpoint.Mobile.Datasource.Helpers;
+﻿using Eirpoint.Mobile.Datasource.Helpers;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
 using Eirpoint.Mobile.Shared.Enumerators;
 using Eirpoint.Mobile.Shared.NativeInterfaces;
 using Platform.Ioc.Injection;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Eirpoint.Mobile.Shared
@@ -39,96 +36,93 @@ namespace Eirpoint.Mobile.Shared
         /// <summary>
         /// 
         /// </summary>        
-        public void UpdateMonitorAction()
+        public async void UpdateMonitorAction()
         {
             Debug.WriteLine("<<< Starting PushMonitor...");
             do
             {
                 try
                 {
-                    Debug.WriteLine("<<< Check if is in transaction");
+                    Debug.WriteLine("<<< Check Is Connected... ");                    
 
-                    if (IsConnected)
+                    if (IsConnected && CommonPlatform.Configuration.HasBasicData)
                     {
                         //declare helper
                         var httpHelper = new HttpHelper();
 
                         // Loop until the whole query is fulfilled.
                         foreach (var endpoint in EntityResourcesHelper.GetValues())
-                        {
-                            //complement endpoint (in this case because is using a generic method in refit)
-                            _httpClient = Endpoints.BaseEirpointHttpClient(endpoint.Value);
-
+                        {                             
                             switch (endpoint.Key)
                             {
                                 case AltoposResourcesEnum.CUSTOMER:
                                     {
-                                        httpHelper.SynchronizeBackground<CustomersEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<CustomersEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.DEPARTMENT:
                                     {
-                                        httpHelper.SynchronizeBackground<DepartmentEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<DepartmentEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.DISCOUNT:
                                     {
-                                        httpHelper.SynchronizeBackground<DiscountsEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<DiscountsEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.PAYMENT_CATEGORY:
                                     {
-                                        httpHelper.SynchronizeBackground<PaymentsCategoriesEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<PaymentsCategoriesEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.GROUP_LIST:
                                     {
-                                        httpHelper.SynchronizeBackground<GroupsEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<GroupsEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.POS_STATION:
                                     {
-                                        httpHelper.SynchronizeBackground<PosStationsEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<PosStationsEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.PRODUCT:
                                     {
-                                        httpHelper.SynchronizeBackground<ProductsEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<ProductsEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.PRODUCT_BARCODE:
                                     {
-                                        httpHelper.SynchronizeBackground<ProductBarCodesEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<ProductBarCodesEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.PROMOTIONS:
                                     {
-                                        httpHelper.SynchronizeBackground<PromotionsEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<PromotionsEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.REASON:
                                     {
-                                        httpHelper.SynchronizeBackground<ReasonsEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<ReasonsEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.RECEIPT:
                                     {
-                                        httpHelper.SynchronizeBackground<ReceiptTemplatesEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<ReceiptTemplatesEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.STOCKING_ATTRIBUTE_TYPE:
                                     {
-                                        httpHelper.SynchronizeBackground<StockingAttributeTypeEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<StockingAttributeTypeEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.STOCK_LOCATION:
                                     {
-                                        httpHelper.SynchronizeBackground<StockLocationsEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<StockLocationsEntity>(endpoint.Value);
                                         break;
                                     }
                                 case AltoposResourcesEnum.USER_LIST:
                                     {
-                                        httpHelper.SynchronizeBackground<UsersEntity>(_httpClient);
+                                        await httpHelper.SynchronizeBackground<UsersEntity>(endpoint.Value);
                                         break;
                                     }
                             }

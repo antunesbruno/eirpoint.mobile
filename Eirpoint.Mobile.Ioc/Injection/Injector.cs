@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using System;
 
 namespace Platform.Ioc.Injection
 {
@@ -66,7 +67,7 @@ namespace Platform.Ioc.Injection
         public static void BuildContainer()
         {
             _container = builder.Build();
-        }
+        }     
 
         #endregion
     }

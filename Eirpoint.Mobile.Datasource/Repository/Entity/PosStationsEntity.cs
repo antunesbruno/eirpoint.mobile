@@ -16,7 +16,6 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public string SyncUpdateTimestamp { get; set; }
         public string SyncInsertTimestamp { get; set; }
         public bool? IsOnline { get; set; }
-        public DateTime? LastModified { get; set; }
         public int? Hwid { get; set; }
         public int? StationType { get; set; }
         public bool? Active { get; set; }

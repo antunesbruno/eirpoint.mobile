@@ -91,7 +91,8 @@ namespace Eirpoint.Mobile
             Injector.RegisterType<PersistenceBase<UsersEntity>, IPersistenceBase<UsersEntity>>();
             Injector.RegisterType<PersistenceBase<BarcodesEntity>, IPersistenceBase<BarcodesEntity>>();
             Injector.RegisterType<PersistenceBase<RangeHeaderLogEntity>, IPersistenceBase<RangeHeaderLogEntity>>();
-       
+            Injector.RegisterType<PersistenceBase<ConfigurationEntity>, IPersistenceBase<ConfigurationEntity>>();
+
             //core api
             Injector.RegisterType<ProductsApi, IProductsApiCore>();
             Injector.RegisterType<BarcodeProductsApi, IBarcodeProductsApiCore>();
@@ -106,6 +107,7 @@ namespace Eirpoint.Mobile
             //native interfaces
             Injector.RegisterType<NativeConnectivity, IConnectivity>();
             Injector.RegisterType<MonitorService, IMonitorService>();
+            Injector.RegisterType<ConfigurationApp, IConfiguration>();
         }
     }
 }

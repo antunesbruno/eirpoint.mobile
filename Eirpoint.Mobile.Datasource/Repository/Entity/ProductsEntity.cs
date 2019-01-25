@@ -64,7 +64,6 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public bool MultiUseProduct { get; set; }
         public string PermittedUses { get; set; }
         public string EposDisplayPriority { get; set; }
-        public DateTime? LastModified { get; set; }
         public bool AreShelfEdgeLabelsRequired { get; set; }
         public bool AreProductLabelsRequired { get; set; }
         public bool Transient { get; set; }

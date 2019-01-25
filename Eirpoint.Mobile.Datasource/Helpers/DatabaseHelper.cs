@@ -32,7 +32,8 @@ namespace Eirpoint.Mobile.Datasource.Helpers
             PlatformDatabase.CreateTable<StockLocationsEntity>();
             PlatformDatabase.CreateTable<UsersEntity>();
             PlatformDatabase.CreateTable<BarcodesEntity>();
-            PlatformDatabase.CreateTable<RangeHeaderLogEntity>();                    
+            PlatformDatabase.CreateTable<RangeHeaderLogEntity>();
+            PlatformDatabase.CreateTable<ConfigurationEntity>();
         }
     }
 }

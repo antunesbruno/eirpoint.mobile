@@ -14,7 +14,6 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public int? ExternalReasonCode { get; set; }
         public string SyncUpdateTimestamp { get; set; }
         public string SyncInsertTimestamp { get; set; }
-        public DateTime? LastModified { get; set; }
 
         //[Ignore]
         //public List<Self> Self { get; set; }

@@ -13,7 +13,6 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public bool? Active { get; set; }
         public string SyncUpdateTimestamp { get; set; }
         public string SyncInsertTimestamp { get; set; }
-        public DateTime? LastModified { get; set; }
 
         //[Ignore]
         //public List<SubDepartmentsEntity> SubDepartments { get; set; }

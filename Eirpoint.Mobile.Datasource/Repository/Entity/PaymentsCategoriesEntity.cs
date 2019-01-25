@@ -26,7 +26,6 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public bool? IsElectronicCash { get; set; }
         public string SyncUpdateTimestamp { get; set; }
         public string SyncInsertTimestamp { get; set; }
-        public DateTime? LastModified { get; set; }
         public bool? Active { get; set; }
         public bool? ShowOnHandheld { get; set; }
 

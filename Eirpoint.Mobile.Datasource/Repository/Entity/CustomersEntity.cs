@@ -50,7 +50,6 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public string Note { get; set; }
         public bool? CreditIssues { get; set; }
         public bool? IsMale { get; set; }
-        public DateTime? LastModified { get; set; }
         public double? Discount { get; set; }
         public string LoyaltyScheme { get; set; }
         public string HomeLocation { get; set; }
