@@ -1,4 +1,5 @@
-﻿using Eirpoint.Mobile.Shared.Interfaces;
+﻿using Acr.UserDialogs;
+using Eirpoint.Mobile.Shared.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,6 +23,9 @@ namespace Eirpoint.Mobile.Shared
             //create monitor
             _updateMonitor = new UpdateDataMonitor();
 
+            //set callback
+            _updateMonitor.UpdateCallback(UpdateCallback);
+
             //create task monitor
             Task.Factory.StartNew(() => _updateMonitor.UpdateMonitorAction(), TaskCreationOptions.LongRunning);
 
@@ -39,6 +43,11 @@ namespace Eirpoint.Mobile.Shared
 
             //set flag
             _updateMonitor.IsRunning = false;
+        }
+
+        private void UpdateCallback(string entityName)
+        {
+            UserDialogs.Instance.Toast(entityName, new TimeSpan(2));
         }
     }
 }

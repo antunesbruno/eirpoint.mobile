@@ -3,15 +3,12 @@ using Eirpoint.Mobile.Datasource.Api;
 using Eirpoint.Mobile.Datasource.DTO;
 using Eirpoint.Mobile.Datasource.Repository.Base;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
-using Eirpoint.Mobile.Shared.Enumerators;
 using Eirpoint.Mobile.Shared.NativeInterfaces;
-using Eirpoint.Mobile.Shared.Utils;
 using Newtonsoft.Json;
 using Platform.Ioc.Injection;
 using Refit;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -37,6 +34,8 @@ namespace Eirpoint.Mobile.Datasource.Helpers
         private int headerEnd = 0;
         private bool isCompleted = false;
 
+        Action<string> _onSynchronizedCallback = null;
+
         #endregion
 
         #region Properties       
@@ -45,8 +44,7 @@ namespace Eirpoint.Mobile.Datasource.Helpers
 
         #endregion
 
-        #region Public Methods
-        
+        #region Public Methods        
 
         /// <summary>
         /// Syncronize items first time (Basic data of items)
@@ -372,8 +370,11 @@ namespace Eirpoint.Mobile.Datasource.Helpers
         /// <param name="httpClient"></param>
         /// <param name="onProgressCallback"></param>
         /// <returns></returns>
-        public async Task SynchronizeBackground<T>(string endpoint) where T : EntityBase
+        public async Task SynchronizeBackground<T>(string endpoint, Action<string> onSynchronizedCallback = null) where T : EntityBase
         {
+            //set callback
+           _onSynchronizedCallback = onSynchronizedCallback;
+
             //declare result
             var responseResult = new HttpHelperResponseDTO();
 
@@ -419,6 +420,9 @@ namespace Eirpoint.Mobile.Datasource.Helpers
 
                             //set completed
                             isCompleted = true;
+
+                            //return name of entity updated
+                            //onSynchronizedCallback?.Invoke(typeof(T).Name);
                         }
                         else if (httpResponse.StatusCode == HttpStatusCode.RequestEntityTooLarge)
                         {
@@ -433,6 +437,10 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                         {
                             //if partial deserialize and verify if insert or update data items
                             isCompleted = await DeserializeInsertOrUpdatePartialResponse<T>(headers, httpClient, httpResponse);
+
+                            //return name of entity updated
+                            //if(isCompleted)
+                            //    onSynchronizedCallback?.Invoke(typeof(T).Name);
                         }                       
                         else
                         {
@@ -579,6 +587,12 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                         await Injector.Resolver<IPersistenceBase<T>>().Insert(item);
                     }
                 }
+
+                if (deserializedResponse.Count > 0)
+                {
+                    string itemsId = string.Join(",", deserializedResponse.Select(x => x.Id.ToString()).ToArray());
+                    _onSynchronizedCallback?.Invoke(typeof(T).Name + " - Id..: " + itemsId);
+                }
             }
         }
 
@@ -688,8 +702,8 @@ namespace Eirpoint.Mobile.Datasource.Helpers
             {
                 foreach (var item in partialResponse)
                 {
-                    var hasItem = Injector.Resolver<IPersistenceBase<T>>().Get(s => ((EntityBase)s).Id.Equals(((EntityBase)item).Id)).Result;
-
+                    var hasItem = Injector.Resolver<IPersistenceBase<T>>().Get(s => s.Id.Equals(item.Id)).Result;
+                    
                     if (hasItem != null)
                     {
                         await Injector.Resolver<IPersistenceBase<T>>().Update(item);
@@ -698,6 +712,12 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                     {
                         await Injector.Resolver<IPersistenceBase<T>>().Insert(item);
                     }
+                }
+
+                if (partialResponse.Count > 0)
+                {
+                    string itemsId = string.Join(",", partialResponse.Select(x => x.Id.ToString()).ToArray());
+                    _onSynchronizedCallback?.Invoke(typeof(T).Name + " - Id...: " + itemsId);
                 }
             }
 

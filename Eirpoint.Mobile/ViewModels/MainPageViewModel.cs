@@ -152,13 +152,14 @@ namespace Eirpoint.Mobile.ViewModels
                 {
                     //start synchronism
                     await Injector.Resolver<IBasicDataApiCore>().SynchronizeDataItems(UpdateProgressBar, _progressDialog);
+
+                    _progressDialog.Dispose();
+                    _progressDialog.Hide();
+
+                    //inform user about finish process
+                    await UserDialogs.Instance.AlertAsync("Basic data synchronized successfully !", "Synchronize", "OK");
+
                 };
-
-                _progressDialog.Dispose();
-                _progressDialog.Hide();
-
-                //inform user about finish process
-                await UserDialogs.Instance.AlertAsync("Basic data synchronized successfully !", "Synchronize", "OK");
             }
             catch (Exception ex)
             {
