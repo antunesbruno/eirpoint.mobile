@@ -1,6 +1,7 @@
 ﻿using Eirpoint.Mobile.Core.Interfaces;
 using Eirpoint.Mobile.Datasource.Api;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
+using Eirpoint.Mobile.Datasource.Repository.Urls;
 using Newtonsoft.Json;
 using Refit;
 using System;

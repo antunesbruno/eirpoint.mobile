@@ -27,6 +27,10 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <AndroidKeyStore>false</AndroidKeyStore>
+    <AndroidSigningKeyStore>C:\Users\bruno.antunes\AppData\Local\Xamarin\Mono for Android\Keystey.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyAlias>eirpoint_mobile_key</AndroidSigningKeyAlias>
+    <AndroidSigningStorePass>12345678</AndroidSigningStorePass>
+    <AndroidSigningKeyPass>12345678</AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +46,7 @@
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidSupportedAbis />
     <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+    <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -1,13 +1,16 @@
 ﻿using Acr.UserDialogs;
 using Eirpoint.Mobile.Core.Interfaces;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
+using Eirpoint.Mobile.Datasource.Repository.Urls;
 using Eirpoint.Mobile.Shared.Barcode;
 using Eirpoint.Mobile.Shared.NativeInterfaces;
+using Newtonsoft.Json;
 using Platform.Ioc.Injection;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 

@@ -17,13 +17,13 @@ namespace Eirpoint.Mobile.Datasource.Repository.Entity
         public string SyncInsertTimestamp { get; set; }
 
         [Ignore]
-        public List<Self> Product { get; set; }
+        public Self Product { get; set; }
 
         [Ignore]
-        public List<Self> StockItem { get; set; }
+        public Self StockItem { get; set; }
 
         [Ignore]
-        public List<Self> Self { get; set; }
+        public Self Self { get; set; }
 
     }
 }

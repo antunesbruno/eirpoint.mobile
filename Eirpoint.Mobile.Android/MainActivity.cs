@@ -14,7 +14,7 @@ using System.Collections.Generic;
 namespace Eirpoint.Mobile.Droid
 {
     [Activity(Label = "Eirpoint.Mobile", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity//, EMDKManager.IEMDKListener
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, EMDKManager.IEMDKListener
     {
         #region Fields        
 
@@ -35,7 +35,7 @@ namespace Eirpoint.Mobile.Droid
             LoadApplication(new App(new AndroidInitializer()));
 
             //init zebra EMDK
-            //InitEMDK();
+            InitEMDK();
 
             //ACR Dialogs
             UserDialogs.Init(this);
@@ -43,28 +43,28 @@ namespace Eirpoint.Mobile.Droid
 
         #region IEMDKListener Methods                 
 
-        //public void InitEMDK()
-        //{
-        //    EMDKResults results = EMDKManager.GetEMDKManager(Application.Context, this);
+        public void InitEMDK()
+        {
+            EMDKResults results = EMDKManager.GetEMDKManager(Application.Context, this);
 
-        //    if (results.StatusCode != EMDKResults.STATUS_CODE.Success)
-        //    {
-        //        //debug
-        //        Log.Debug("BarcodeCreateFailed", BarcodeMessages.EMDK_OBJECT_CREATED_FAILED);
+            if (results.StatusCode != EMDKResults.STATUS_CODE.Success)
+            {
+                //debug
+                Log.Debug("BarcodeCreateFailed", BarcodeMessages.EMDK_OBJECT_CREATED_FAILED);
 
-        //        //callback message
-        //        BarcodeStatusCallback(BarcodeMessages.EMDK_OBJECT_CREATED_FAILED);
+                //callback message
+                BarcodeStatusCallback(BarcodeMessages.EMDK_OBJECT_CREATED_FAILED);
 
-        //    }
-        //    else
-        //    {
-        //        //debug
-        //        Log.Debug("BarcodeCreateSuccess", BarcodeMessages.EMDK_OBJECT_CREATED_SUCCESS);
+            }
+            else
+            {
+                //debug
+                Log.Debug("BarcodeCreateSuccess", BarcodeMessages.EMDK_OBJECT_CREATED_SUCCESS);
 
-        //        //callback message
-        //        BarcodeStatusCallback(BarcodeMessages.EMDK_OBJECT_CREATED_SUCCESS);
-        //    }
-        //}
+                //callback message
+                BarcodeStatusCallback(BarcodeMessages.EMDK_OBJECT_CREATED_SUCCESS);
+            }
+        }
 
         public void OnClosed()
         {
