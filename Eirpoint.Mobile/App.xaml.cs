@@ -23,8 +23,7 @@ using Xamarin.Forms.Xaml;
 namespace Eirpoint.Mobile
 {
     public partial class App : PrismApplication
-    {      
-    
+    {           
         public App() : this(null)
         {
         }
@@ -32,7 +31,7 @@ namespace Eirpoint.Mobile
         public App(IPlatformInitializer initializer) : base(initializer)
         {
             //start monitor
-            Injector.Resolver<IMonitorService>().CreateUpdateDataMonitor();
+            Injector.Resolver<IMonitorService>().CreateUpdateDataMonitor();            
         }
 
         protected override async void OnInitialized()
@@ -51,7 +50,7 @@ namespace Eirpoint.Mobile
             RegisterNavigations(containerRegistry);
 
             //create database
-            Injector.Resolver<IDatabaseHelper>().CreateDatabase();
+            Injector.Resolver<IDatabaseHelper>().CreateDatabase(FilePlatformOS.OS_ABSOLUTE_PATH);
 
             //create tables
             Injector.Resolver<IDatabaseHelper>().CreateTables();           

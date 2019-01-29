@@ -578,14 +578,14 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                 {
                     var hasItem = Injector.Resolver<IPersistenceBase<T>>().Get(s => s.Id.Equals(item.Id)).Result;
 
+                    //delete old item
                     if (hasItem != null)
                     {
-                        await Injector.Resolver<IPersistenceBase<T>>().Update(item);
+                        await Injector.Resolver<IPersistenceBase<T>>().Delete(item);
                     }
-                    else
-                    {
-                        await Injector.Resolver<IPersistenceBase<T>>().Insert(item);
-                    }
+
+                    //insert
+                    await Injector.Resolver<IPersistenceBase<T>>().Insert(item);
                 }
 
                 if (deserializedResponse.Count > 0)
@@ -703,15 +703,15 @@ namespace Eirpoint.Mobile.Datasource.Helpers
                 foreach (var item in partialResponse)
                 {
                     var hasItem = Injector.Resolver<IPersistenceBase<T>>().Get(s => s.Id.Equals(item.Id)).Result;
-                    
+
+                    //delete old item
                     if (hasItem != null)
                     {
-                        await Injector.Resolver<IPersistenceBase<T>>().Update(item);
+                        await Injector.Resolver<IPersistenceBase<T>>().Delete(item);
                     }
-                    else
-                    {
-                        await Injector.Resolver<IPersistenceBase<T>>().Insert(item);
-                    }
+
+                    //insert
+                    await Injector.Resolver<IPersistenceBase<T>>().Insert(item);
                 }
 
                 if (partialResponse.Count > 0)

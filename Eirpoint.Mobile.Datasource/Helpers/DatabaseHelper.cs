@@ -5,14 +5,14 @@ using Eirpoint.Mobile.Datasource.Repository.Entity;
 namespace Eirpoint.Mobile.Datasource.Helpers
 {
     public class DatabaseHelper : IDatabaseHelper
-    {
+    {        
         private readonly string DATABASE_FOLDER = "eirpoint";
-        private readonly string DATABASE_NAME = "eirpoint-mobile.db3";
+        private readonly string DATABASE_NAME = "eirpoint-mobile.db3";        
 
-        public void CreateDatabase()
+        public void CreateDatabase(string absolutePath)
         {
             //create database
-            PlatformDatabase.CreateDatabase(DATABASE_FOLDER, DATABASE_NAME);
+            PlatformDatabase.CreateDatabase(absolutePath, DATABASE_FOLDER, DATABASE_NAME);
         }
 
         public void CreateTables()

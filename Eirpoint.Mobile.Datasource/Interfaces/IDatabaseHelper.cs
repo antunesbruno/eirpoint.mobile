@@ -2,7 +2,7 @@
 {
     public interface IDatabaseHelper
     {
-        void CreateDatabase();
-        void CreateTables();
+        void CreateDatabase(string absolutePath);
+        void CreateTables();        
     }
 }

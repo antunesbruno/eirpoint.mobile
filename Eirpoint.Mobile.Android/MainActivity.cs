@@ -3,6 +3,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Util;
+using Eirpoint.Mobile.Shared;
 using Eirpoint.Mobile.Shared.Barcode;
 using Eirpoint.Mobile.Shared.NativeInterfaces;
 using Platform.Ioc.Injection;
@@ -30,8 +31,14 @@ namespace Eirpoint.Mobile.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
-
+            
+            //init
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            //set absolute path
+            FilePlatformOS.OS_ABSOLUTE_PATH = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;            
+
+            //load app
             LoadApplication(new App(new AndroidInitializer()));
 
             //init zebra EMDK

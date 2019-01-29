@@ -5,20 +5,26 @@ using System.IO;
 namespace Eirpoint.Mobile.Datasource.Repository
 {
     public static class PlatformDatabase
-    {      
+    {
         #region Fields        
 
+        private static string _absolutePath;
         private static string _databaseFolder;
+        private static string _databaseName;
+        
 
         #endregion
 
         #region Properties        
 
-        //database path
-        public static string DatabasePath { get { return Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/" + _databaseFolder; } }
+        //absolute path setted by OS
+        public static string AbsolutePathOS { get { return _absolutePath; } }
+
+        //database path (Production: Environment.GetFolderPath(Environment.SpecialFolder.Personal)
+        public static string DatabasePath { get { return AbsolutePathOS + "/" + _databaseFolder; } }
 
         //database name
-        public static string DatabaseName { get; private set; }
+        public static string DatabaseName { get { return _databaseName; } }
 
         //sqlite connection
         public static SQLiteAsyncConnection SQLiteConnection { get; private set; }
@@ -30,10 +36,11 @@ namespace Eirpoint.Mobile.Datasource.Repository
         /// <summary>
         /// Create database by path
         /// </summary>
-        public static void CreateDatabase(string databaseFolder, string databaseName)
+        public static void CreateDatabase(string absolutePath = null, string databaseFolder = null, string databaseName = null)
         {
+            _absolutePath = absolutePath;
             _databaseFolder = databaseFolder;
-            DatabaseName = databaseName;
+            _databaseName = databaseName;
 
             if (!string.IsNullOrEmpty(databaseFolder) && !string.IsNullOrEmpty(databaseName))
             {

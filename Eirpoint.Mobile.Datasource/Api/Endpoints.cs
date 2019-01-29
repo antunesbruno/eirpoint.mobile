@@ -39,6 +39,7 @@ namespace Eirpoint.Mobile.Datasource.Api
             _httpClient.BaseAddress = string.IsNullOrEmpty(milestoneEndPoint) ? new Uri(BaseEirpointUrl) : new Uri(BaseEirpointUrl + milestoneEndPoint);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
             _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            _httpClient.Timeout = TimeSpan.FromSeconds(15);
 
             return _httpClient;
         }
