@@ -21,12 +21,18 @@
                     </StackLayout>
                 </Frame>
                 
-                <Label x:Name="lblBarcodeSearch" Text="Search Barcode - Online: " FontAttributes ="Bold" FontSize="Default" />
+                <Label x:Name="lblBarcodeSearch" Text="Search Barcode: " FontAttributes ="Bold" FontSize="Default" />
                 <Frame CornerRadius="1" BorderColor="Silver" Margin="5,5,5,5">
                     <StackLayout Orientation="Vertical">
                         <StackLayout HorizontalOptions="FillAndExpand" Padding="5,5,5,5">
+                            <Label x:Name="lblBarcodeSearchOnline" Text="Search Online - Altopos API: " FontAttributes ="Bold" FontSize="Default" />
                             <Entry x:Name="txt_FindProducts" Text="{Binding TxtProductsFind}" Placeholder="Type barcode here !"/>
-                            <Button x:Name="btn_SearchDatabase" Text="Search Barcode Read" Command="{Binding SearchBarcodeCommand}" />
+                            <Button x:Name="btn_SearchDatabase" Text="Search Barcode Online" Command="{Binding SearchBarcodeOnlineCommand}" />
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="FillAndExpand" Padding="5,5,5,5">
+                            <Label x:Name="lblBarcodeSearchLocal" Text="Search Local Database: " FontAttributes ="Bold" FontSize="Default" />
+                            <Entry x:Name="txt_FindProductsLocal" Text="{Binding TxtProductsFindLocal}" Placeholder="Type barcode here !"/>
+                            <Button x:Name="btn_SearchDatabaseLocal" Text="Search Barcode Local" Command="{Binding SearchBarcodeLocalCommand}" />
                         </StackLayout>
                         <StackLayout>
                             <Grid Padding="5,0" RowSpacing="1" ColumnSpacing="1">

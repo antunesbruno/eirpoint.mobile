@@ -3,6 +3,7 @@ using Eirpoint.Mobile.Datasource.Api;
 using Eirpoint.Mobile.Datasource.Repository.Entity;
 using Eirpoint.Mobile.Datasource.Repository.Urls;
 using Newtonsoft.Json;
+using Platform.Ioc.Injection;
 using Refit;
 using System;
 using System.Collections.Generic;

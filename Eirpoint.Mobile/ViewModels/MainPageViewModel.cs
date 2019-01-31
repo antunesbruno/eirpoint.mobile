@@ -42,8 +42,11 @@ namespace Eirpoint.Mobile.ViewModels
             //products button action
             PerformBasicDataCommand = new DelegateCommand(PerformBasicData);
 
-            //products button action
-            SearchBarcodeCommand = new DelegateCommand(SearchBarcode);
+            //products button action online
+            SearchBarcodeOnlineCommand = new DelegateCommand(SearchBarcodeOnline);
+
+            //products button action local
+            SearchBarcodeLocalCommand = new DelegateCommand(SearchBarcodeLocal);
 
             //initialize progress bar
             PbProducts = 0.0;
@@ -124,6 +127,17 @@ namespace Eirpoint.Mobile.ViewModels
             }
         }
 
+        private string _txtProductsFindLocal;
+        public string TxtProductsFindLocal
+        {
+            get { return _txtProductsFindLocal; }
+            set
+            {
+                SetProperty(ref _txtProductsFindLocal, value);
+                RaisePropertyChanged(nameof(TxtProductsFindLocal));
+            }
+        }
+
         private bool _isRunning;
         public bool IsRunning
         {
@@ -140,7 +154,8 @@ namespace Eirpoint.Mobile.ViewModels
         #region Delegates
 
         public DelegateCommand PerformBasicDataCommand { get; set; }
-        public DelegateCommand SearchBarcodeCommand { get; set; }
+        public DelegateCommand SearchBarcodeOnlineCommand { get; set; }
+        public DelegateCommand SearchBarcodeLocalCommand { get; set; }
 
         #endregion
 
@@ -171,13 +186,26 @@ namespace Eirpoint.Mobile.ViewModels
             }
         }
 
-        private async void SearchBarcode()
+        private async void SearchBarcodeOnline()
         {
-            using (var Dialog = UserDialogs.Instance.Loading("Searching Barcode", null, null, true, MaskType.Black))
+            using (var Dialog = UserDialogs.Instance.Loading("Searching Barcode Online", null, null, true, MaskType.Black))
             {
                 BarcodesEntity = new BarcodesEntity();
 
                 var entity = await Injector.Resolver<IBarcodeProductsApiCore>().GetBarcodeProductByCode(TxtProductsFind);
+
+                if (entity?.Barcode != null)
+                    BarcodesEntity = entity;
+            }
+        }
+
+        private async void SearchBarcodeLocal()
+        {
+            using (var Dialog = UserDialogs.Instance.Loading("Searching Barcode Local", null, null, true, MaskType.Black))
+            {
+                BarcodesEntity = new BarcodesEntity();
+
+                var entity = await Injector.Resolver<IBarcodesBll>().GetProductByBarcode(TxtProductsFindLocal);
 
                 if (entity?.Barcode != null)
                     BarcodesEntity = entity;

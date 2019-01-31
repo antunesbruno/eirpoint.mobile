@@ -99,6 +99,7 @@ namespace Eirpoint.Mobile
 
             //core bll
             Injector.RegisterType<ProductsBll, IProductsBll>();
+            Injector.RegisterType<BarcodesBll, IBarcodesBll>();
 
             //barcode
             Injector.RegisterType<BarcodeHandler, IBarCode>();
