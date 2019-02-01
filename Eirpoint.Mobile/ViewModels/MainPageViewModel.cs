@@ -224,7 +224,7 @@ namespace Eirpoint.Mobile.ViewModels
         {
             if (!string.IsNullOrEmpty(args.BarCodeData))
             {
-                TxtProductsFind = args.BarCodeData;
+                TxtProductsFindLocal = TxtProductsFind = args.BarCodeData;                
                 EdtResultRead = args.Message + "\n \n";
             }
             else if (!string.IsNullOrEmpty(args.Message))
